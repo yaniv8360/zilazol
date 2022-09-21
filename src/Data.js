@@ -1,6 +1,6 @@
 let allProducts = [{
     id: 1,
-    title: 'توت فرنگی',
+    title: 'אודי בלתי נסבל בטעם תות',
     image: 'images/1.jpg',
     price: 10000,
     count: 1,

@@ -21,9 +21,14 @@ function App() {
       <ContextFilter>
         <Header />
         {router}
+        no_chance
       </ContextFilter>
     </ContextProvider>
   );
 }
-
+function App1() {
+  return (<div>no_chance</div>);
+  }
 export default App;
+export {App1};
+
