@@ -6,6 +6,8 @@ import Details from './components/Details/Details';
 import FavoritePage from './components/Favorite/FavoritePage';
 import Header from './components/Header/Header';
 import Products from './components/Products/Products';
+import React, {useState, useEffect} from 'react';
+
 
 
 function App() {
@@ -21,14 +23,69 @@ function App() {
       <ContextFilter>
         <Header />
         {router}
-        no_chance
+        {App2()}
       </ContextFilter>
     </ContextProvider>
   );
 }
 function App1() {
-  return (<div>no_chance</div>);
+  // return (<div>no_chance</div>);
+  return ("no_chance");
+}
+function App2() {
+  const [merchants, setMerchants] = useState(false);
+  useEffect(() => {
+    getMerchant();
+  }, []);
+  function getMerchant() {
+    fetch('http://localhost:3001')
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        setMerchants(data);
+      });
   }
+  function createMerchant() {
+    let name = prompt('Enter merchant name');
+    let email = prompt('Enter merchant email');
+    fetch('http://localhost:3001/merchants', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email }),
+    })
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        alert(data);
+        getMerchant();
+      });
+  }
+  function deleteMerchant() {
+    let id = prompt('Enter merchant id');
+    fetch(`http://localhost:3001/merchants/${id}`, {
+      method: 'DELETE',
+    })
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        alert(data);
+        getMerchant();
+      });
+  }
+  return (
+    <div>
+      {merchants ? merchants : 'There is no merchant data available'}
+      <br />
+      <button onClick={createMerchant}>Add merchant</button>
+      <br />
+      <button onClick={deleteMerchant}>Delete merchant</button>
+    </div>
+  );
+}
 export default App;
-export {App1};
 
