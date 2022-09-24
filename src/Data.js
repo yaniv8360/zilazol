@@ -1,6 +1,42 @@
+import { App1, App3, App4, App5 } from "./App"
+import { str } from "./App";
+import React, { useState, useEffect } from 'react';
+
+// const y = ${x};
+const str1 = 'abcdefg';
+export const hoser_moh = 'Hello worlddididdd';
+// exports.hoser_moh = "hoser_moh";
+// var hoser_new = require("./App").hoser_moh_im;
+// var str2 = hoser_new;
+// var chishalon = require("./App").hoser_moh_im;
+function App32() {
+    return ('abcd');
+}
+function App7() {
+    const [merchants, setMerchants] = useState(false);
+    useEffect(() => {
+      getMerchant();
+    }, []);
+    function getMerchant() {
+      fetch('http://localhost:3001')
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          console.log(data[0].name)
+          setMerchants(data[0].name);
+        });
+    }
+    return (
+      
+        {merchants}
+      
+    );
+  }
+
 let allProducts = [{
     id: 1,
-    title: 'אודי בלתי נסבל בטעם תות',
+    title: "no_chance",
     image: 'images/1.jpg',
     price: 10000,
     count: 1,
