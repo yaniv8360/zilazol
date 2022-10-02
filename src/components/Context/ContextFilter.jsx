@@ -2,24 +2,26 @@ import React, { createContext, useReducer, useState, useEffect } from "react";
 
 // import allProducts from "../Context/ContextProvider";
 
-let allProducts = [{
-  id: 1,
-  title: "dani_the_king",
-  image: 'images/1.jpg',
-  price: 10000,
-  count: 1,
-  isInterest: false,
-  category: 'میوه جات'
-},
-{
-  id: 2,
-  title: 'پیاز',
-  image: 'images/2.jpg',
-  price: 13000,
-  count: 1,
-  isInterest: false,
-  category: 'سبزیجات'
-}]
+// let allProducts = [{
+//   id: 1,
+//   title: "dani_the_king",
+//   image: 'images/1.jpg',
+//   price: 10000,
+//   count: 1,
+//   isInterest: false,
+//   category: 'میوه جات'
+// },
+// {
+//   id: 2,
+//   title: 'پیاز',
+//   image: 'images/2.jpg',
+//   price: 13000,
+//   count: 1,
+//   isInterest: false,
+//   category: 'سبزیجات'
+// }]
+let allProducts = [];
+
 
 const initialFilterState = {
   filteredItems: [...allProducts],
@@ -82,11 +84,18 @@ export default function ContextFilter({ children }) {
         return response.json();
       })
       .then(data => {
-        console.log(data[0].ItemName);
-        setMerchants(data[0].ItemName);
-        console.log(merchants);
 
-        state.filteredItems[0].title = data[0].ItemName;
+        const records = data.map((item)=>({id: item.ItemCode, title: item.ItemName, image: 'images/3.jpg',price: 1000, count: 1, isInterest: false, category:'سبزیجات'}));
+        console.log(records);
+        // console.log(data[0].ItemName);
+        setMerchants(records);
+
+
+        // console.log(data[0].ItemName);
+        // setMerchants(data[0].ItemName);
+        // console.log(merchants);
+
+        state.filteredItems = records;
         // console.log(state.allProducts);
         console.log(state.filteredItems[0].title);
 

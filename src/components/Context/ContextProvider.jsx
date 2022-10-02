@@ -8,24 +8,25 @@ import { sendPrice } from "../../Offer";
 // let str2 = sendPrice;
 // console.log(str42);
 
-let allProducts = [{
-  id: 1,
-  title: "dani_the_king",
-  image: 'images/1.jpg',
-  price: 10000,
-  count: 1,
-  isInterest: false,
-  category: 'میوه جات'
-},
-{
-  id: 2,
-  title: 'پیاز',
-  image: 'images/2.jpg',
-  price: 13000,
-  count: 1,
-  isInterest: false,
-  category: 'سبزیجات'
-}]
+// let allProducts = [{
+//   id: 1,
+//   title: "dani_the_king",
+//   image: 'images/1.jpg',
+//   price: 10000,
+//   count: 1,
+//   isInterest: false,
+//   category: 'میوه جات'
+// },
+// {
+//   id: 2,
+//   title: 'پیاز',
+//   image: 'images/2.jpg',
+//   price: 13000,
+//   count: 1,
+//   isInterest: false,
+//   category: 'سبزیجات'
+// }]
+let allProducts = [];
 
 const initialState = {
   allProducts,
@@ -197,16 +198,19 @@ export default function ContextProvider({ children }) {
         return response.json();
       })
       .then(data => {
-        console.log(data[0].ItemName);
-        setMerchants(data[0].ItemName);
+        // const doubled = numbers.map((number) => number * 2);
+        const records = data.map((item)=>({id: item.ItemCode, title: item.ItemName, image: 'images/3.jpg',price: 1000, count: 1, isInterest: false, category:'سبزیجات'}));
+        console.log(records);
+        // console.log(data[0].ItemName);
+        setMerchants(records);
       });
   }
-  console.log(merchants);
+  // console.log(merchants);
   // state.totalPrice = 8;
   // console.log(state.totalPrice);
-  state.allProducts[0].title = merchants;
-  console.log(state.allProducts[0].title);
-  console.log(state.allProducts);
+  // state.allProducts = merchants;
+  // console.log(state.allProducts[0].title);
+  // console.log(state.allProducts);
   // // state.allProducts = [{id: 3,
   // //   title: 'abc',
   // //   image: 'images/3.jpg',
