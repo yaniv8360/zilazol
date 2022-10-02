@@ -82,11 +82,11 @@ export default function ContextFilter({ children }) {
         return response.json();
       })
       .then(data => {
-        console.log(data[0].name);
-        setMerchants(data[0].name);
+        console.log(data[0].ItemName);
+        setMerchants(data[0].ItemName);
         console.log(merchants);
 
-        state.filteredItems[0].title = data[0].name;
+        state.filteredItems[0].title = data[0].ItemName;
         // console.log(state.allProducts);
         console.log(state.filteredItems[0].title);
 

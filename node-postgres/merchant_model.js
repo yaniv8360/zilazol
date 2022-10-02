@@ -1,16 +1,16 @@
 const Pool = require('pg').Pool
 
 const pool = new Pool({
-  user: 'my_user',
+  user: 'postgres',
   host: 'localhost',
-  database: 'my_database',
-  password: 'root',
+  database: 'zilazol_DB',
+  password: 'hothot1212',
   port: 5432,
 });
 
 const getMerchants = () => {
   return new Promise(function(resolve, reject) {
-    pool.query('SELECT * FROM merchants ORDER BY id ASC', (error, results) => {
+    pool.query('SELECT * FROM public.products LIMIT 10;', (error, results) => {
       if (error) {
         reject(error)
       }
@@ -19,34 +19,34 @@ const getMerchants = () => {
   }) 
 }
 
-const createMerchant = (body) => {
-  return new Promise(function(resolve, reject) {
-    const { name, email } = body
+// const createMerchant = (body) => {
+//   return new Promise(function(resolve, reject) {
+//     const { name, email } = body
 
-    pool.query('INSERT INTO merchants (name, email) VALUES ($1, $2) RETURNING *', [name, email], (error, results) => {
-      if (error) {
-        reject(error)
-      }
-      resolve(`A new merchant has been added added: ${JSON.stringify(results.rows[0])}`)
-    })
-  })
-}
+//     pool.query('INSERT INTO merchants (name, email) VALUES ($1, $2) RETURNING *', [name, email], (error, results) => {
+//       if (error) {
+//         reject(error)
+//       }
+//       resolve(`A new merchant has been added added: ${JSON.stringify(results.rows[0])}`)
+//     })
+//   })
+// }
 
-const deleteMerchant = (merchantId) => {
-  return new Promise(function(resolve, reject) {
-    const id = parseInt(merchantId)
+// const deleteMerchant = (merchantId) => {
+//   return new Promise(function(resolve, reject) {
+//     const id = parseInt(merchantId)
 
-    pool.query('DELETE FROM merchants WHERE id = $1', [id], (error, results) => {
-      if (error) {
-        reject(error)
-      }
-      resolve(`Merchant deleted with ID: ${id}`)
-    })
-  })
-}
+//     pool.query('DELETE FROM merchants WHERE id = $1', [id], (error, results) => {
+//       if (error) {
+//         reject(error)
+//       }
+//       resolve(`Merchant deleted with ID: ${id}`)
+//     })
+//   })
+// }
 
 module.exports = {
-  getMerchants,
-  createMerchant,
-  deleteMerchant,
+  getMerchants
+  // createMerchant,
+  // deleteMerchant,
 }
