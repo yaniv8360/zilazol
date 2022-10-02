@@ -4,7 +4,6 @@ let offerCode = {
 }
 
 let sendPrice = 10_000;
-
 export default offerCode
 
 export {sendPrice}

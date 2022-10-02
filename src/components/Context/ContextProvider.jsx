@@ -1,7 +1,31 @@
-import React, { createContext, useReducer } from "react";
-import allProducts from "../../Data";
+import React, { createContext, useReducer, useState, useEffect } from "react";
+// import allProducts from "../../Data";
 import offerCode from "../../Offer";
 import { sendPrice } from "../../Offer";
+// import App32 from "../../Data";
+// import { str42 } from "../../App";
+// console.log("imhere");
+// let str2 = sendPrice;
+// console.log(str42);
+
+let allProducts = [{
+  id: 1,
+  title: "dani_the_king",
+  image: 'images/1.jpg',
+  price: 10000,
+  count: 1,
+  isInterest: false,
+  category: 'میوه جات'
+},
+{
+  id: 2,
+  title: 'پیاز',
+  image: 'images/2.jpg',
+  price: 13000,
+  count: 1,
+  isInterest: false,
+  category: 'سبزیجات'
+}]
 
 const initialState = {
   allProducts,
@@ -163,6 +187,35 @@ export const ProductDispath = createContext();
 
 export default function ContextProvider({ children }) {
   const [state, dispath] = useReducer(reduce, initialState);
+  const [merchants, setMerchants] = useState(false);
+  useEffect(() => {
+    getMerchant();
+  }, []);
+  function getMerchant() {
+    fetch('http://localhost:3001')
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data[0].name);
+        setMerchants(data[0].name);
+      });
+  }
+  console.log(merchants);
+  // state.totalPrice = 8;
+  // console.log(state.totalPrice);
+  state.allProducts[0].title = merchants;
+  console.log(state.allProducts[0].title);
+  console.log(state.allProducts);
+  // // state.allProducts = [{id: 3,
+  // //   title: 'abc',
+  // //   image: 'images/3.jpg',
+  // //   price: 15000,
+  // //   count: 1,
+  // //   isInterest: false,
+  // //   category: 'سبزیجات'}];
+  // console.log(state.allProducts);
+
   return (
     <ProductContext.Provider value={{ state }}>
       <ProductDispath.Provider value={{ dispath }}>
@@ -171,3 +224,5 @@ export default function ContextProvider({ children }) {
     </ProductContext.Provider>
   );
 }
+
+// export {allProducts};

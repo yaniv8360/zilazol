@@ -25,17 +25,18 @@ function App() {
       <ContextFilter>
         <Header />
         {router}
-        {App5()}
+        {/* {App6()} */}
       </ContextFilter>
     </ContextProvider>
   );
 }
 function App1() {
   // return (<div>no_chance</div>);
-  console.log('sb');
-  var hoser = require("./Data").hoser_moh;
+  // console.log('sb');
+  // var hosein = 'sb';
+  // var hoser = require("./Data").hoser_moh;
 
-  return (hoser);
+  return ('abcdefghijklmnop');
 
 }
 function App2() {
@@ -345,10 +346,14 @@ function getMerchant12() {
     return(z);
 }
 // const x = 'no_succesd';
+let str42 = 'abcdefghijklmnopqrst';
+export {str42}
+
+// export { x };
 
 
 export default App;
-// export { App1 };
+export { App1 };
 // export { App3 };
 // export { App4 };
 // export { App5 };
