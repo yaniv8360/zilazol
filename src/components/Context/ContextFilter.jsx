@@ -87,7 +87,7 @@ export default function ContextFilter({ children }) {
       })
       .then(data => {
 
-        const records = data.map((item) => ({ id: item.ItemCode, title: item.ItemName, image: 'images/3.jpg', price: 1000, count: 1, isInterest: false, category: 'سبزیجات' }));
+        const records = data.map((item) => ({ id: item.ItemCode, title: item.ItemName, image: 'https://img.rami-levy.co.il/product/'+item.ItemCode+'/small.jpg', price: 1000, count: 1, isInterest: false, category: 'سبزیجات' }));
         console.log(records);
         // console.log(data[0].ItemName);
         setMerchants(records);

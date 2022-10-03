@@ -199,10 +199,11 @@ export default function ContextProvider({ children }) {
       })
       .then(data => {
         // const doubled = numbers.map((number) => number * 2);
-        const records = data.map((item)=>({id: item.ItemCode, title: item.ItemName, image: 'images/3.jpg',price: 1000, count: 1, isInterest: false, category:'سبزیجات'}));
+        const records = data.map((item)=>({id: item.ItemCode, title: item.ItemName, image: 'https://img.rami-levy.co.il/product/021231828294/small.jpg',price: 1000, count: 1, isInterest: false, category:'سبزیجات'}));
         console.log(records);
         // console.log(data[0].ItemName);
         setMerchants(records);
+        state.allProducts = records;
       });
   }
   // console.log(merchants);
