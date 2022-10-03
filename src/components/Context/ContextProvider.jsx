@@ -191,7 +191,7 @@ export default function ContextProvider({ children }) {
   const [merchants, setMerchants] = useState(false);
   useEffect(() => {
     getMerchant();
-  }, []);
+  }, [state]);
   function getMerchant() {
     fetch('http://localhost:3001')
       .then(response => {

@@ -21,7 +21,7 @@ import React, { createContext, useReducer, useState, useEffect } from "react";
 //   category: 'سبزیجات'
 // }]
 let allProducts = [];
-
+console.log(allProducts);
 
 const initialFilterState = {
   filteredItems: [...allProducts],
@@ -73,11 +73,13 @@ export const FilterContext = createContext();
 export const FilterDispath = createContext();
 
 export default function ContextFilter({ children }) {
-  const [state, dispath] = useReducer(filterReduce, initialFilterState);
+  console.log("came76");
   const [merchants, setMerchants] = useState(false);
+  const [state, dispath] = useReducer(filterReduce, initialFilterState);
+
   useEffect(() => {
     getMerchant();
-  }, []);
+  }, [state]);
   function getMerchant() {
     fetch('http://localhost:3001')
       .then(response => {
@@ -85,10 +87,11 @@ export default function ContextFilter({ children }) {
       })
       .then(data => {
 
-        const records = data.map((item)=>({id: item.ItemCode, title: item.ItemName, image: 'images/3.jpg',price: 1000, count: 1, isInterest: false, category:'سبزیجات'}));
+        const records = data.map((item) => ({ id: item.ItemCode, title: item.ItemName, image: 'images/3.jpg', price: 1000, count: 1, isInterest: false, category: 'سبزیجات' }));
         console.log(records);
         // console.log(data[0].ItemName);
         setMerchants(records);
+        // initialFilterState.filteredItems = records;
 
 
         // console.log(data[0].ItemName);
@@ -97,14 +100,17 @@ export default function ContextFilter({ children }) {
 
         state.filteredItems = records;
         // console.log(state.allProducts);
-        console.log(state.filteredItems[0].title);
+        // console.log(state.filteredItems[0].title);
 
       });
-      console.log(merchants);
+    console.log(merchants);
 
   }
-  console.log(merchants);
+  // console.log(initialFilterState)
+  // console.log(merchants);
+  console.log(state);
   // state.totalPrice = 8;
+
   // console.log(state.totalPrice);
   // filteredItems: [...allProducts]
   // state.filteredItems[0].title = 'abc';

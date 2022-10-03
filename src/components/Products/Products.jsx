@@ -8,7 +8,7 @@ import Footer from "../Footer/Footer";
 
 export default function Products() {
   const { state } = useContext(FilterContext);
-
+  console.log(state.filteredItems);
   const productsList = state.filteredItems.filter((product) => {
     return product.title.includes(state.searchKey) || !state.searchKey;
   });
