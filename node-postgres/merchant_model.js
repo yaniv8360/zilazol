@@ -9,8 +9,8 @@ const pool = new Pool({
 });
 
 const getMerchants = () => {
-  return new Promise(function(resolve, reject) {
-    pool.query('SELECT * FROM public.products ORDER BY "ItemCode" ASC LIMIT 10;', (error, results) => {
+  return new Promise(function(resolve, reject) {  
+    pool.query('SELECT * FROM public.products ORDER BY "ItemCode" ASC LIMIT 1000;', (error, results) => {
       if (error) {
         reject(error)
       }
