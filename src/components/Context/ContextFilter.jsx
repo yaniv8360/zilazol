@@ -87,8 +87,15 @@ export default function ContextFilter({ children }) {
       })
       .then(data => {
 
-        const records = data.map((item) => ({ id: item.ItemCode, title: item.ItemName, image: 'https://img.rami-levy.co.il/product/'+item.ItemCode+'/small.jpg', price: 1000, count: 1, isInterest: false, category: 'سبزیجات' }));
-        console.log(records);
+        // const records = data.map((item) => ({ id: item.ItemCode, title: item.ItemName, image: 'https://m.pricez.co.il/ProductPictures/200x/'+item.ItemCode+'.jpg', price: item.ItemCode, count: 1, isInterest: false, category: 'سبزیجات' }));
+        // console.log(records);
+        const records = data.map((item) => {
+          let imag = 'https://m.pricez.co.il/ProductPictures/200x/'+item.ItemCode+'.jpg';
+          if (item.Image != null) {
+            imag = item.Image;
+          }
+          return ({ id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode, count: 1, isInterest: false, category: 'سبزیجات' })
+        });
         // console.log(data[0].ItemName);
         setMerchants(records);
         // initialFilterState.filteredItems = records;
