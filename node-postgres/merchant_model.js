@@ -10,7 +10,7 @@ const pool = new Pool({
 
 const getMerchants = () => {
   return new Promise(function(resolve, reject) {  
-    pool.query('SELECT * FROM public."copyOfProductsWithImages" ORDER BY "ItemCode" ASC LIMIT 1000;', (error, results) => {
+    pool.query('SELECT * FROM public."ProductsWImages" ORDER BY "ItemCode" ASC LIMIT 1000;', (error, results) => {
       if (error) {
         reject(error)
       }

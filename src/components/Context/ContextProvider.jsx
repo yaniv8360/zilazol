@@ -38,7 +38,8 @@ const initialState = {
   totalPriceFainal: 0,
   isFavorite: false,
   isEnterOfferCode: false,
-  offerMessage: ""
+  offerMessage: "",
+  net: "שופרסל"
 };
 
 const sumPrice = (items, isOffer) => {
@@ -166,6 +167,19 @@ const reduce = (state, action) => {
         ...state
       };
     }
+    case "CHANGE_NET": {
+      // if state.net == 
+      if (state.net === "שופרסל") {
+        state.net = "רמי לוי";
+      }
+      else {
+        state.net = "שופרסל";
+        // console.log(state.net)
+      }
+      return {
+        ...state
+      };
+    }
     case "OFFER_CODE": {
       if (offerCode.code === action.payload) {
         state.isEnterOfferCode = true;
@@ -199,8 +213,8 @@ export default function ContextProvider({ children }) {
       })
       .then(data => {
         // const doubled = numbers.map((number) => number * 2);
-        const records = data.map((item)=>({id: item.ItemCode, title: item.ItemName, image: 'https://img.rami-levy.co.il/product/021231828294/small.jpg',price: item.ItemCode, count: 1, isInterest: false, category:'سبزیجات'}));
-        console.log(records);
+        const records = data.map((item) => ({ id: item.ItemCode, title: item.ItemName, image: 'https://img.rami-levy.co.il/product/021231828294/small.jpg', price: item.ItemCode, count: 1, isInterest: false, category: 'سبزیجات' }));
+        // console.log(records);
         // console.log(data[0].ItemName);
         setMerchants(records);
         state.allProducts = records;
