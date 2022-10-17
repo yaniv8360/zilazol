@@ -25,7 +25,8 @@ console.log(allProducts);
 
 const initialFilterState = {
   filteredItems: [...allProducts],
-  searchKey: ""
+  searchKey: "",
+  net: "שופרסל"
 };
 
 const filterItemsHandler = (key) => {
@@ -90,13 +91,19 @@ export default function ContextFilter({ children }) {
         // const records = data.map((item) => ({ id: item.ItemCode, title: item.ItemName, image: 'https://m.pricez.co.il/ProductPictures/200x/'+item.ItemCode+'.jpg', price: item.ItemCode, count: 1, isInterest: false, category: 'سبزیجات' }));
         // console.log(records);
         const records = data.map((item) => {
-          let imag = 'https://m.pricez.co.il/ProductPictures/200x/'+item.ItemCode+'.jpg';
+          let imag = 'https://m.pricez.co.il/ProductPictures/200x/' + item.ItemCode + '.jpg';
           if (item.Image != null) {
             imag = item.Image;
           }
-          return ({ id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode, count: 1, isInterest: false, category: 'سبزیجات' })
+          return ({
+            id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode,
+            count: 1, isInterest: false, category: 'سبزیجات', RamAve: item.RamAve,
+            RamCur: item.RamCur, ShufAve: item.ShufAve, ShufCur: item.ShufCur
+          })
         });
         // console.log(data[0].ItemName);
+        const isRamy = (item) => item.RamCur != null;
+        const isshuf = (item) => item.ShufCur != null;
         setMerchants(records);
         // initialFilterState.filteredItems = records;
 
@@ -104,8 +111,15 @@ export default function ContextFilter({ children }) {
         // console.log(data[0].ItemName);
         // setMerchants(data[0].ItemName);
         // console.log(merchants);
+        
+        if (state.net === "שופרסל") {
+          state.filteredItems = records.filter(isshuf);
+        }
+        else {
+          state.filteredItems = records.filter(isRamy);
+        }
 
-        state.filteredItems = records;
+        // state.filteredItems = records.filter(isshuf);
         // console.log(state.allProducts);
         // console.log(state.filteredItems[0].title);
 
