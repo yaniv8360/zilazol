@@ -21,13 +21,18 @@ import React, { createContext, useReducer, useState, useEffect } from "react";
 //   category: 'سبزیجات'
 // }]
 let allProducts = [];
+let allAllProducts = [];
+
 console.log(allProducts);
 
 const initialFilterState = {
   filteredItems: [...allProducts],
+  allItems: [...allAllProducts],
   searchKey: "",
   net: "שופרסל"
 };
+const isRamy = (item) => item.RamCur != null;
+const isshuf = (item) => item.ShufCur != null;
 
 const filterItemsHandler = (key) => {
   const filteredItems = allProducts.filter((product) => {
@@ -44,8 +49,28 @@ const filterReduce = (state, action) => {
       return {
         ...state
       };
+    case "CHANGE_NET": {
+      // if state.net == 
+      if (state.net === "שופרסל") {
+        state.net = "רמי לוי";
+        state.filteredItems = state.allItems.filter(isRamy);
+      }
+      else {
+        state.net = "שופרסל";
+        state.filteredItems = state.allItems.filter(isshuf);
+        // console.log(state.net)
+        return {
+          ...state
+        };
+      }
+    }
     case "ALL":
-      state.filteredItems = [...allProducts];
+      if (state.net === "שופרסל") {
+        state.filteredItems = state.allItems.filter(isshuf);
+      }
+      else {
+        state.filteredItems = state.allItems.filter(isRamy);
+      }
       return {
         ...state
       };
@@ -106,12 +131,10 @@ export default function ContextFilter({ children }) {
         const isshuf = (item) => item.ShufCur != null;
         setMerchants(records);
         // initialFilterState.filteredItems = records;
-
-
         // console.log(data[0].ItemName);
         // setMerchants(data[0].ItemName);
         // console.log(merchants);
-        
+        state.allItems = records;
         if (state.net === "שופרסל") {
           state.filteredItems = records.filter(isshuf);
         }

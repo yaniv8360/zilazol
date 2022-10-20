@@ -27,9 +27,12 @@ import { sendPrice } from "../../Offer";
 //   category: 'سبزیجات'
 // }]
 let allProducts = [];
+let allAllProducts = [];
+
 
 const initialState = {
   allProducts,
+  allAllProducts,
   favorites: [],
   basket: [],
   totalPrice: 0,
@@ -168,12 +171,16 @@ const reduce = (state, action) => {
       };
     }
     case "CHANGE_NET": {
+      const isRamy = (item) => item.RamCur != null;
+      const isshuf = (item) => item.ShufCur != null;
       // if state.net == 
       if (state.net === "שופרסל") {
         state.net = "רמי לוי";
+        state.allProducts = state.allAllProducts.filter(isRamy);
       }
       else {
         state.net = "שופרסל";
+        state.allProducts = state.allAllProducts.filter(isshuf);
         // console.log(state.net)
       }
       return {
@@ -212,13 +219,43 @@ export default function ContextProvider({ children }) {
         return response.json();
       })
       .then(data => {
-        // const doubled = numbers.map((number) => number * 2);
-        const records = data.map((item) => ({ id: item.ItemCode, title: item.ItemName, image: 'https://img.rami-levy.co.il/product/021231828294/small.jpg', price: item.ItemCode, count: 1, isInterest: false, category: 'سبزیجات' }));
+
+        // const records = data.map((item) => ({ id: item.ItemCode, title: item.ItemName, image: 'https://m.pricez.co.il/ProductPictures/200x/'+item.ItemCode+'.jpg', price: item.ItemCode, count: 1, isInterest: false, category: 'سبزیجات' }));
         // console.log(records);
+        const records = data.map((item) => {
+          let imag = 'https://m.pricez.co.il/ProductPictures/200x/' + item.ItemCode + '.jpg';
+          if (item.Image != null) {
+            imag = item.Image;
+          }
+          return ({
+            id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode,
+            count: 1, isInterest: false, category: 'سبزیجات', RamAve: item.RamAve,
+            RamCur: item.RamCur, ShufAve: item.ShufAve, ShufCur: item.ShufCur
+          })
+        });
         // console.log(data[0].ItemName);
+        const isRamy = (item) => item.RamCur != null;
+        const isshuf = (item) => item.ShufCur != null;
         setMerchants(records);
-        state.allProducts = records;
+        // initialFilterState.filteredItems = records;
+        // console.log(data[0].ItemName);
+        // setMerchants(data[0].ItemName);
+        // console.log(merchants);
+        state.allAllProducts = records;
+        if (state.net === "שופרסל") {
+          state.allProducts = records.filter(isshuf);
+        }
+        else {
+          state.allProducts = records.filter(isRamy);
+        }
+
+        // state.filteredItems = records.filter(isshuf);
+        // console.log(state.allProducts);
+        // console.log(state.filteredItems[0].title);
+
       });
+    console.log(merchants);
+
   }
   // console.log(merchants);
   // state.totalPrice = 8;

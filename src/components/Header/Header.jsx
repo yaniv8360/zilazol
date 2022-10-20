@@ -25,10 +25,10 @@ function Header() {
     }
   }, [dispath, state.favorites, state]);
 
-  const handleClick = () => {
-    setTimeout(() => {
-      dispath({ type: "CHANGE_NET" });
-    }, 1000);
+  // const handleClick = () => {
+  //   setTimeout(() => {
+  //     dispath({ type: "CHANGE_NET" });
+  //   }, 1000);
     // state.net = "רמי לוי";
     // if (state.net == "שופרסל") {
     //   state = {
@@ -42,19 +42,19 @@ function Header() {
     //   };
     //   console.log(state.net)
     // }
-  }
+  // }
   return (
     <header className="header">
       <nav className="nav">
         <Link to={"/"} className="logo">
           מערכת זיל הזול
         </Link>
-        {state.net}
+        {/* {state.net}
         <div>
           <button type="button" onClick={handleClick}>
             "החלף רשת"
           </button>
-        </div>
+        </div> */}
         <div className="search_header">{pathname === "/" && <SearchBar />}</div>
         <div className="icon_Sopping_box">
           <Link to={"/basket"} className="shoppe_icon_box">

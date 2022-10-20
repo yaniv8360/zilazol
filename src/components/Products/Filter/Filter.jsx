@@ -34,6 +34,12 @@ export default function Filter() {
         >
           حبوبات
         </button>
+        <button
+          onClick={() => dispath({ type: "CHANGE_NET" })}
+          className="filter_btn"
+        >
+          החלף רשת
+        </button>
       </div>
     </div>
   );
