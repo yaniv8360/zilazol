@@ -13,11 +13,11 @@ export default function Interest(props) {
       onClick={() => dispath({ type: "ADD_FAVORITE", payload: props.id })}
       className="Interest"
     >
-      {/* {isAddFavorite.isInterest ? (
+      {isAddFavorite!= null && isAddFavorite.isInterest ? (
         <BsHeartFill className="heart_Fill" />
       ) : (
         <BsHeart className="heart" />
-      )} */}
+      )}
     </div>
   );
 }

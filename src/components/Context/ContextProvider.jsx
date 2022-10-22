@@ -212,7 +212,7 @@ export default function ContextProvider({ children }) {
   const [merchants, setMerchants] = useState(false);
   useEffect(() => {
     getMerchant();
-  }, [state]);
+  }, []);
   function getMerchant() {
     fetch('http://localhost:3001')
       .then(response => {
@@ -237,10 +237,12 @@ export default function ContextProvider({ children }) {
         const isRamy = (item) => item.RamCur != null;
         const isshuf = (item) => item.ShufCur != null;
         setMerchants(records);
+
         // initialFilterState.filteredItems = records;
         // console.log(data[0].ItemName);
         // setMerchants(data[0].ItemName);
         // console.log(merchants);
+
         state.allAllProducts = records;
         if (state.net === "שופרסל") {
           state.allProducts = records.filter(isshuf);

@@ -4,10 +4,12 @@ import Interest from "./Interest";
 import { Link } from "react-router-dom";
 import { ProductContext, ProductDispath } from "../../Context/ContextProvider";
 import Buttons from "../../Buttons/Buttons";
+import { FilterContext } from "../../Context/ContextFilter";
 
 export default function Card(props) {
   const { dispath } = useContext(ProductDispath);
   const { state } = useContext(ProductContext);
+  // const { state1 } = useContext(FilterContext);
 
   const datas = state.allProducts.find((product) => product.id === props.id);
   const checkBasket = state.basket.some((product) => product.id === props.id);
@@ -21,7 +23,15 @@ export default function Card(props) {
             <span>{props.title}</span>
           </div>
           <div className="price">
-            <span>{props.price.toLocaleString()} تومان</span>
+            {/* <span>{props.price.toLocaleString()} تومان</span> */}
+            <span>{
+              props.net === "שופרסל" ?
+                (props.ShufCur != null ? (props.ShufCur.toLocaleString()) :
+                  ("לא ידוע")) :
+                (props.RamCur != null ? (props.RamCur.toLocaleString()) :
+                  ("לא ידוע"))
+            }
+              מחיר</span>
           </div>
         </div>
       </Link>

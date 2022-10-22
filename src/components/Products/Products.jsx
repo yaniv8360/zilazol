@@ -22,7 +22,7 @@ export default function Products() {
       </div>
       <div className="product_container">
         {productsList.length > 0 ? (
-          productsList.map((product) => <Card key={product.id} {...product} />)
+          productsList.map((product) => <Card net = {state.net} key={product.id} {...product} />)
         ) : (
           <div className="not_products">
             <img
