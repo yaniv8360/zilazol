@@ -236,6 +236,22 @@ export default function ContextProvider({ children }) {
         // console.log(data[0].ItemName);
         const isRamy = (item) => item.RamCur != null;
         const isshuf = (item) => item.ShufCur != null;
+        const srtShuf = function(a, b) {
+          if (1-a["ShufCur"]/a["ShufAve"] < 1-b["ShufCur"]/b["ShufAve"]) {
+            return 1;
+          } else if (1-a["ShufCur"]/a["ShufAve"] > 1-b["ShufCur"]/b["ShufAve"]) {
+            return -1;
+          }
+          return 0;
+        }
+        const srtRamy = function(a, b) {
+          if (1-a["RamCur"]/a["RamAve"] < 1-b["RamCur"]/b["RamAve"]) {
+            return 1;
+          } else if (1-a["RamCur"]/a["RamAve"] > 1-b["RamCur"]/b["RamAve"]) {
+            return -1;
+          }
+          return 0;
+        }
         setMerchants(records);
 
         // initialFilterState.filteredItems = records;
@@ -246,9 +262,13 @@ export default function ContextProvider({ children }) {
         state.allAllProducts = records;
         if (state.net === "שופרסל") {
           state.allProducts = records.filter(isshuf);
+          state.allProducts = state.allProducts.sort(srtShuf);
+
         }
         else {
           state.allProducts = records.filter(isRamy);
+          state.allProducts = state.allProducts.sort(srtRamy);
+
         }
 
         // state.filteredItems = records.filter(isshuf);

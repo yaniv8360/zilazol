@@ -33,6 +33,24 @@ const initialFilterState = {
 };
 const isRamy = (item) => item.RamCur != null;
 const isshuf = (item) => item.ShufCur != null;
+const srtShuf = function(a, b) {
+  if (1-a["ShufCur"]/a["ShufAve"] < 1-b["ShufCur"]/b["ShufAve"]) {
+    return 1;
+  } else if (1-a["ShufCur"]/a["ShufAve"] > 1-b["ShufCur"]/b["ShufAve"]) {
+    return -1;
+  }
+  return 0;
+}
+const srtRamy = function(a, b) {
+  if (1-a["RamCur"]/a["RamAve"] < 1-b["RamCur"]/b["RamAve"]) {
+    return 1;
+  } else if (1-a["RamCur"]/a["RamAve"] > 1-b["RamCur"]/b["RamAve"]) {
+    return -1;
+  }
+  return 0;
+}
+// (Number(100*(1-props.ShufCur/props.ShufAve)).toFixed(0).toString() + '%') :
+
 
 const filterItemsHandler = (key) => {
   const filteredItems = allProducts.filter((product) => {
@@ -54,10 +72,12 @@ const filterReduce = (state, action) => {
       if (state.net === "שופרסל") {
         state.net = "רמי לוי";
         state.filteredItems = state.allItems.filter(isRamy);
+        state.filteredItems = state.filteredItems.sort(srtRamy);
       }
       else {
         state.net = "שופרסל";
         state.filteredItems = state.allItems.filter(isshuf);
+        state.filteredItems = state.filteredItems.sort(srtShuf);
         // console.log(state.net)
         return {
           ...state
@@ -67,9 +87,11 @@ const filterReduce = (state, action) => {
     case "ALL":
       if (state.net === "שופרסל") {
         state.filteredItems = state.allItems.filter(isshuf);
+        state.filteredItems = state.filteredItems.sort(srtShuf);
       }
       else {
         state.filteredItems = state.allItems.filter(isRamy);
+        state.filteredItems = state.filteredItems.sort(srtRamy);
       }
       return {
         ...state
@@ -137,9 +159,12 @@ export default function ContextFilter({ children }) {
         state.allItems = records;
         if (state.net === "שופרסל") {
           state.filteredItems = records.filter(isshuf);
+          state.filteredItems = state.filteredItems.sort(srtShuf);
+
         }
         else {
           state.filteredItems = records.filter(isRamy);
+          state.filteredItems = state.filteredItems.sort(srtRamy);
         }
 
         // state.filteredItems = records.filter(isshuf);

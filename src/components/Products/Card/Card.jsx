@@ -17,6 +17,7 @@ export default function Card(props) {
   return (
     <div key={props.id} className="box">
       <Link to={`/${props.id}`}>
+        {/* <div className="discount"><span>מחיר משתלם</span></div> */}
         <img className="product_img" src={props.image} alt="product" />
         <div className="content">
           <div className="title">
@@ -24,14 +25,25 @@ export default function Card(props) {
           </div>
           <div className="price">
             {/* <span>{props.price.toLocaleString()} تومان</span> */}
-            <span>{
-              props.net === "שופרסל" ?
-                (props.ShufCur != null ? (props.ShufCur.toLocaleString()) :
-                  ("לא ידוע")) :
-                (props.RamCur != null ? (props.RamCur.toLocaleString()) :
-                  ("לא ידוע"))
-            }
-              מחיר</span>
+            <span>
+              מחיר ממוצע&nbsp;
+              {
+                // Number(props.density).toFixed(2)
+                props.net === "שופרסל" ?
+                  (props.ShufAve != null ? (Number(props.ShufAve).toFixed(1)) :
+                    ("לא ידוע")) :
+                  (props.RamAve != null ? (Number(props.RamAve).toFixed(1)) :
+                    ("לא ידוע"))
+              }</span>
+            <span>
+              &nbsp;מחיר&nbsp;
+              {
+                props.net === "שופרסל" ?
+                  (props.ShufCur != null ? (Number(props.ShufCur).toFixed(1)) :
+                    ("לא ידוע")) :
+                  (props.RamCur != null ? (Number(props.RamCur).toFixed(1)) :
+                    ("לא ידוע"))
+              }</span>
           </div>
         </div>
       </Link>
@@ -47,6 +59,22 @@ export default function Card(props) {
         </button>
       )}
       <Interest interest={props.isInterest} id={props.id} />
+      <div className="discount"><span>הנחה&nbsp;{
+        props.net === "שופרסל" ?
+          (props.ShufCur != null && props.ShufAve != null ?
+            (Number(props.ShufCur) <= Number(props.ShufAve) ?
+              (Number(100 * (1 - props.ShufCur / props.ShufAve)).toFixed(0).toString() + '%') :
+              (Number(100 * (props.ShufCur / props.ShufAve - 1)).toFixed(0).toString() + '%-')
+            ) :
+            ("לא ידוע")) :
+          (props.RamCur != null && props.RamAve != null ?
+            (Number(props.RamCur) <= Number(props.RamAve) ?
+              (Number(100 * (1 - props.RamCur / props.RamAve)).toFixed(0).toString() + '%') :
+              (Number(100 * (props.RamCur / props.RamAve - 1)).toFixed(0).toString() + '%-')
+            ) :
+            ("לא ידוע"))
+      }
+      </span></div>
     </div>
   );
 }

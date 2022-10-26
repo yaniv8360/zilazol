@@ -47,7 +47,7 @@
 
 .price {
   width: 100%;
-  text-align: left;
+  text-align: right;
   margin-top: 5px;
 }
 
@@ -92,6 +92,19 @@
 
 .buy_icon {
   font-size: 18px;
+}
+
+.discount {
+  width: 100px;
+  text-align: right;
+  margin-right: 100px;
+  position: absolute;
+  background-color: #eee;
+  /* top: 10px; */
+  /* right: 10px; */
+  /* border-radius: 5px; */
+  /* display: flex; */
+  /* align-items: center; */
 }
 
 .Interest {
