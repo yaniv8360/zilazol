@@ -1,3 +1,4 @@
+// file to be removed
 import { App1, App3, App4, App5 } from "./App"
 import { str } from "./App";
 import React, { useState, useEffect } from 'react';

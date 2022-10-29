@@ -30,7 +30,8 @@ const initialFilterState = {
   allItems: [...allAllProducts],
   searchKey: "",
   net: "שופרסל",
-  userName: ""
+  userName: "",
+  init: "a"
 };
 const isRamy = (item) => item.RamCur != null;
 const isshuf = (item) => item.ShufCur != null;
@@ -123,12 +124,12 @@ export const FilterDispath = createContext();
 
 export default function ContextFilter({ children }) {
   console.log("came76");
-  const [merchants, setMerchants] = useState(false);
+  // const [merchants1, setMerchants1] = useState(false);
   const [state, dispath] = useReducer(filterReduce, initialFilterState);
 
   useEffect(() => {
     getMerchant();
-  }, [state]);
+  }, []);
   function getMerchant() {
     fetch('http://localhost:3001')
       .then(response => {
@@ -152,28 +153,35 @@ export default function ContextFilter({ children }) {
         // console.log(data[0].ItemName);
         const isRamy = (item) => item.RamCur != null;
         const isshuf = (item) => item.ShufCur != null;
-        setMerchants(records);
+        console.log(records);
+        // setMerchants1(records);
+        console.log(records);
         // initialFilterState.filteredItems = records;
         // console.log(data[0].ItemName);
         // setMerchants(data[0].ItemName);
         // console.log(merchants);
         state.allItems = records;
-        if (state.net === "שופרסל") {
-          state.filteredItems = records.filter(isshuf);
-          state.filteredItems = state.filteredItems.sort(srtShuf);
+        // if (state.net === "שופרסל") {
+        //   state.filteredItems = records.filter(isshuf);
+        //   state.filteredItems = state.filteredItems.sort(srtShuf);
+        //   console.log(state.filteredItems);
 
-        }
-        else {
-          state.filteredItems = records.filter(isRamy);
-          state.filteredItems = state.filteredItems.sort(srtRamy);
-        }
+        // }
+        // else {
+        //   state.filteredItems = records.filter(isRamy);
+        //   state.filteredItems = state.filteredItems.sort(srtRamy);
+        // }
+        setTimeout(() => {
+          dispath({ type: "ALL" });
+        }, 100);
+
 
         // state.filteredItems = records.filter(isshuf);
         // console.log(state.allProducts);
         // console.log(state.filteredItems[0].title);
 
       });
-    console.log(merchants);
+    // console.log(merchants);
 
   }
   // console.log(initialFilterState)

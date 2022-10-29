@@ -172,6 +172,12 @@ const reduce = (state, action) => {
         ...state
       };
     }
+    case "DELAY": {
+
+      return {
+        ...state
+      };
+    }
     // case "CHANGE_NET": {
     //   const isRamy = (item) => item.RamCur != null;
     //   const isshuf = (item) => item.ShufCur != null;
@@ -227,7 +233,7 @@ export const ProductDispath = createContext();
 
 export default function ContextProvider({ children }) {
   const [state, dispath] = useReducer(reduce, initialState);
-  const [merchants, setMerchants] = useState(false);
+  // const [merchants, setMerchants] = useState(false);
   useEffect(() => {
     getMerchant();
   }, []);
@@ -270,7 +276,7 @@ export default function ContextProvider({ children }) {
           }
           return 0;
         }
-        setMerchants(records);
+        // setMerchants(records);
 
         // initialFilterState.filteredItems = records;
         // console.log(data[0].ItemName);
@@ -288,13 +294,16 @@ export default function ContextProvider({ children }) {
           state.allProducts = state.allProducts.sort(srtRamy);
 
         }
+        // setTimeout(() => {
+        //   dispath({ type: "DELAY" });
+        // }, 100);
 
         // state.filteredItems = records.filter(isshuf);
         // console.log(state.allProducts);
         // console.log(state.filteredItems[0].title);
 
       });
-    console.log(merchants);
+    // console.log(merchants);
 
   }
   // console.log(merchants);
