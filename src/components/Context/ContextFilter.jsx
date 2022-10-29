@@ -29,7 +29,8 @@ const initialFilterState = {
   filteredItems: [...allProducts],
   allItems: [...allAllProducts],
   searchKey: "",
-  net: "שופרסל"
+  net: "שופרסל",
+  userName: ""
 };
 const isRamy = (item) => item.RamCur != null;
 const isshuf = (item) => item.ShufCur != null;

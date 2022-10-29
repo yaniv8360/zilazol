@@ -1,5 +1,6 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 import Basket from './components/Basket/Basket';
+import Login from './components/Login/Login';
 import ContextFilter from './components/Context/ContextFilter';
 import ContextProvider from './components/Context/ContextProvider';
 import Details from './components/Details/Details';
@@ -18,6 +19,7 @@ function App() {
     { path: '/:id', element: <Details /> },
     { path: '/favorite', element: <FavoritePage /> },
     { path: '/basket', element: <Basket /> },
+    { path: '/login', element: <Login /> },
     { path: '*', element: <Navigate to={'/'} /> },
   ])
   return (

@@ -6,12 +6,15 @@ function Offer() {
   const [clickButton, setClickButton] = useState(false);
   const { state } = useContext(ProductContext);
   const { dispath } = useContext(ProductDispath);
+  console.log("ein_sikui");
 
   const inputHandler = (e) => {
     setOfferInput(e.target.value);
   };
 
   const checkOfferCode = () => {
+    console.log("ein_sikui1");
+
     if (offerInput) {
       setClickButton(true);
       dispath({ type: "OFFER_CODE", payload: offerInput });
@@ -27,7 +30,7 @@ function Offer() {
           onChange={(e) => inputHandler(e)}
           type="text"
           disabled={state.isEnterOfferCode}
-          placeholder="קוד הנחה: ABCD"
+          placeholder="کد تخفیف: ABCD"
         />
         <button disabled={state.isEnterOfferCode} onClick={checkOfferCode}>
           اعمال کد

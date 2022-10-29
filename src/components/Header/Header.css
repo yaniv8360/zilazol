@@ -67,6 +67,21 @@
   color: #fff;
 }
 
+.loginContent {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: -3px;
+  bottom: 0;
+  border-radius: 20%;
+  background-color: tomato;
+  font-size: 15px;
+  color: rgb(12, 240, 221);
+}
+
 .badge_mark {
   right: -5px;
   bottom: -5px;

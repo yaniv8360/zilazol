@@ -42,7 +42,9 @@ const initialState = {
   isFavorite: false,
   isEnterOfferCode: false,
   offerMessage: "",
-  net: "שופרסל"
+  net: "שופרסל",
+  userName: "",
+  users: [{userName: "bob", password: "123"}, {userName: "Alice", password: "132"}]
 };
 
 const sumPrice = (items, isOffer) => {
@@ -170,19 +172,35 @@ const reduce = (state, action) => {
         ...state
       };
     }
-    case "CHANGE_NET": {
-      const isRamy = (item) => item.RamCur != null;
-      const isshuf = (item) => item.ShufCur != null;
-      // if state.net == 
-      if (state.net === "שופרסל") {
-        state.net = "רמי לוי";
-        state.allProducts = state.allAllProducts.filter(isRamy);
-      }
-      else {
-        state.net = "שופרסל";
-        state.allProducts = state.allAllProducts.filter(isshuf);
-        // console.log(state.net)
-      }
+    // case "CHANGE_NET": {
+    //   const isRamy = (item) => item.RamCur != null;
+    //   const isshuf = (item) => item.ShufCur != null;
+    //   // if state.net == 
+    //   if (state.net === "שופרסל") {
+    //     state.net = "רמי לוי";
+    //     state.allProducts = state.allAllProducts.filter(isRamy);
+    //   }
+    //   else {
+    //     state.net = "שופרסל";
+    //     state.allProducts = state.allAllProducts.filter(isshuf);
+    //     // console.log(state.net)
+    //   }
+    //   return {
+    //     ...state
+    //   };
+    // }
+    case "LOGIN_USER": {
+      state.userName = action.payload;
+      console.log(state.userName);
+      return {
+        ...state
+      };
+    }
+    case "NEW_USER": {
+      state.userName = action.payload.split(":")[0];
+      console.log(state.userName);
+      state.users = [{userName: state.userName, password: action.payload.split(":")[1]},...state.users]
+      console.log(state.users);
       return {
         ...state
       };
@@ -236,18 +254,18 @@ export default function ContextProvider({ children }) {
         // console.log(data[0].ItemName);
         const isRamy = (item) => item.RamCur != null;
         const isshuf = (item) => item.ShufCur != null;
-        const srtShuf = function(a, b) {
-          if (1-a["ShufCur"]/a["ShufAve"] < 1-b["ShufCur"]/b["ShufAve"]) {
+        const srtShuf = function (a, b) {
+          if (1 - a["ShufCur"] / a["ShufAve"] < 1 - b["ShufCur"] / b["ShufAve"]) {
             return 1;
-          } else if (1-a["ShufCur"]/a["ShufAve"] > 1-b["ShufCur"]/b["ShufAve"]) {
+          } else if (1 - a["ShufCur"] / a["ShufAve"] > 1 - b["ShufCur"] / b["ShufAve"]) {
             return -1;
           }
           return 0;
         }
-        const srtRamy = function(a, b) {
-          if (1-a["RamCur"]/a["RamAve"] < 1-b["RamCur"]/b["RamAve"]) {
+        const srtRamy = function (a, b) {
+          if (1 - a["RamCur"] / a["RamAve"] < 1 - b["RamCur"] / b["RamAve"]) {
             return 1;
-          } else if (1-a["RamCur"]/a["RamAve"] > 1-b["RamCur"]/b["RamAve"]) {
+          } else if (1 - a["RamCur"] / a["RamAve"] > 1 - b["RamCur"] / b["RamAve"]) {
             return -1;
           }
           return 0;

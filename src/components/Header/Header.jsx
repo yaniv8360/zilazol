@@ -25,23 +25,23 @@ function Header() {
     }
   }, [dispath, state.favorites, state]);
 
-  // const handleClick = () => {
+  const handleClick = () => {}
   //   setTimeout(() => {
   //     dispath({ type: "CHANGE_NET" });
   //   }, 1000);
-    // state.net = "רמי לוי";
-    // if (state.net == "שופרסל") {
-    //   state = {
-    //     ...state,
-    //     net: "רמי לוי"
-    //   };
-    // } else {
-    //   state = {
-    //     ...state,
-    //     net: "שופרסל"
-    //   };
-    //   console.log(state.net)
-    // }
+  // state.net = "רמי לוי";
+  // if (state.net == "שופרסל") {
+  //   state = {
+  //     ...state,
+  //     net: "רמי לוי"
+  //   };
+  // } else {
+  //   state = {
+  //     ...state,
+  //     net: "שופרסל"
+  //   };
+  //   console.log(state.net)
+  // }
   // }
   return (
     <header className="header">
@@ -49,6 +49,15 @@ function Header() {
         <Link to={"/"} className="logo">
           מערכת זיל הזול
         </Link>
+        {state.userName == "" ? (<><div>שלום אורח</div><div>
+          {/* <button type="button" onClick={handleClick}>
+            התחבר
+          </button> */}
+          <Link to={"/login"} >התחבר</Link>
+        </div></>
+        ) :
+          (<div>שלום {state.userName}</div>)}
+
         {/* {state.net}
         <div>
           <button type="button" onClick={handleClick}>
