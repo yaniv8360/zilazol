@@ -8,15 +8,27 @@ const pool = new Pool({
   port: 5432,
 });
 
-const getMerchants = () => {
-  return new Promise(function(resolve, reject) {  
-    pool.query('SELECT * FROM public."ProductsWithPrices" ORDER BY "ItemCode" ASC LIMIT 1000;', (error, results) => {
+const getMerchants = (table) => {
+  if (table == "Products") {
+    return new Promise(function (resolve, reject) {
+      pool.query('SELECT * FROM public."ProductsWithPrices" ORDER BY "ItemCode" ASC LIMIT 1000;', (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        resolve(results.rows);
+      })
+    })
+  }
+}
+const getUsers = () => {
+  return new Promise(function (resolve, reject) {
+    pool.query('SELECT * FROM public."UsersT" ORDER BY "userName" ASC;', (error, results) => {
       if (error) {
         reject(error)
       }
       resolve(results.rows);
     })
-  }) 
+  })
 }
 
 // const createMerchant = (body) => {

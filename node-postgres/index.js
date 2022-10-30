@@ -10,8 +10,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/', (req, res) => {
-  merchant_model.getMerchants()
+app.get('/:table', (req, res) => {
+
+  merchant_model.getMerchants(req.params.table)
   .then(response => {
     res.status(200).send(response);
   })

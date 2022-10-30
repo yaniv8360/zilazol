@@ -131,7 +131,7 @@ export default function ContextFilter({ children }) {
     getMerchant();
   }, []);
   function getMerchant() {
-    fetch('http://localhost:3001')
+    fetch('http://localhost:3001/Products')
       .then(response => {
         return response.json();
       })
