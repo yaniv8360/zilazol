@@ -11,8 +11,17 @@ app.use(function (req, res, next) {
 });
 
 app.get('/:table', (req, res) => {
-
   merchant_model.getMerchants(req.params.table)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(error => {
+      res.status(500).send(error);
+    })
+})
+
+app.post('/addUsers/:user', (req, res) => {
+  merchant_model.addUserToDB(req.params.user)
   .then(response => {
     res.status(200).send(response);
   })
@@ -20,16 +29,6 @@ app.get('/:table', (req, res) => {
     res.status(500).send(error);
   })
 })
-
-// app.post('/merchants', (req, res) => {
-//   merchant_model.createMerchant(req.body)
-//   .then(response => {
-//     res.status(200).send(response);
-//   })
-//   .catch(error => {
-//     res.status(500).send(error);
-//   })
-// })
 
 // app.delete('/merchants/:id', (req, res) => {
 //   merchant_model.deleteMerchant(req.params.id)

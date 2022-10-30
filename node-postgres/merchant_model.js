@@ -9,6 +9,7 @@ const pool = new Pool({
 });
 
 const getMerchants = (table) => {
+  console.log(table);
   if (table == "Products") {
     return new Promise(function (resolve, reject) {
       pool.query('SELECT * FROM public."ProductsWithPrices" ORDER BY "ItemCode" ASC LIMIT 1000;', (error, results) => {
@@ -19,17 +20,51 @@ const getMerchants = (table) => {
       })
     })
   }
+  if (table == "Users") {
+    return new Promise(function (resolve, reject) {
+      pool.query('SELECT * FROM public."UsersT" ORDER BY "userName" ASC;', (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        resolve(results.rows);
+      })
+    })
+  }
 }
-const getUsers = () => {
+const addUserToDB = (user) => {
+  console.log(user);
+  const userName = user.split(":")[0];
+  const password = user.split(":")[1];
   return new Promise(function (resolve, reject) {
-    pool.query('SELECT * FROM public."UsersT" ORDER BY "userName" ASC;', (error, results) => {
+    pool.query('INSERT INTO public."UsersT" VALUES ($1, $2);', [userName, password], (error, results) => {
       if (error) {
         reject(error)
       }
-      resolve(results.rows);
+      resolve('user is added to the users DB table');
     })
   })
+  // if (table == "Users") {
+  //   return new Promise(function (resolve, reject) {
+  //     pool.query('SELECT * FROM public."UsersT" ORDER BY "userName" ASC;', (error, results) => {
+  //       if (error) {
+  //         reject(error)
+  //       }
+  //       resolve(results.rows);
+  //     })
+  //   })
+  // }
 }
+
+// const getUsers = () => {
+//   return new Promise(function (resolve, reject) {
+//     pool.query('SELECT * FROM public."UsersT" ORDER BY "userName" ASC;', (error, results) => {
+//       if (error) {
+//         reject(error)
+//       }
+//       resolve(results.rows);
+//     })
+//   })
+// }
 
 // const createMerchant = (body) => {
 //   return new Promise(function(resolve, reject) {
@@ -58,7 +93,7 @@ const getUsers = () => {
 // }
 
 module.exports = {
-  getMerchants
+  getMerchants, addUserToDB
   // createMerchant,
   // deleteMerchant,
 }

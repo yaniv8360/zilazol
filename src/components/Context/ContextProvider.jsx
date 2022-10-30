@@ -44,7 +44,7 @@ const initialState = {
   offerMessage: "",
   net: "שופרסל",
   userName: "",
-  users: [{userName: "bob", password: "123"}, {userName: "Alice", password: "132"}]
+  users: [{ userName: "bob", password: "123" }, { userName: "Alice", password: "132" }]
 };
 
 const sumPrice = (items, isOffer) => {
@@ -79,8 +79,30 @@ const sumPriceWithSend = (totalPrice, offerPrice = 0) => {
 
   return { totalPriceFainal };
 };
+// fetch(`http://localhost:3001/merchants/${id}`, {
+
 
 const reduce = (state, action) => {
+  function addUser(user) {
+    fetch('http://localhost:3001/addUsers/'+user, { method: 'POST', })
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        alert(data);
+      // .then(response => {
+      //     return response.json();
+      //   })
+      // .then(data => {
+      //   const records = data.map((item) => {
+      //     return ({
+      //       userName: item.userName, password: item.password
+      //     })
+      //   });
+      //   state.users = records;
+      //   console.log(state.users);
+      });
+  }
   switch (action.type) {
     case "ADD_FAVORITE": {
       state.allProducts.forEach((product) => {
@@ -203,10 +225,12 @@ const reduce = (state, action) => {
       };
     }
     case "NEW_USER": {
+      addUser(action.payload);
       state.userName = action.payload.split(":")[0];
       console.log(state.userName);
-      state.users = [{userName: state.userName, password: action.payload.split(":")[1]},...state.users]
+      state.users = [{ userName: state.userName, password: action.payload.split(":")[1] }, ...state.users]
       console.log(state.users);
+      // getUsers();
       return {
         ...state
       };
@@ -236,6 +260,7 @@ export default function ContextProvider({ children }) {
   // const [merchants, setMerchants] = useState(false);
   useEffect(() => {
     getMerchant();
+    getUsers();
   }, []);
   function getMerchant() {
     fetch('http://localhost:3001/Products')
@@ -321,6 +346,67 @@ export default function ContextProvider({ children }) {
   // //   category: 'سبزیجات'}];
   // console.log(state.allProducts);
 
+  function getUsers() {
+    fetch('http://localhost:3001/Users')
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+
+        const records = data.map((item) => {
+          // let imag = 'https://m.pricez.co.il/ProductPictures/200x/' + item.ItemCode + '.jpg';
+          // if (item.Image != null) {
+          //   imag = item.Image;
+          // }
+          return ({
+            userName: item.userName, password: item.password
+          })
+        });
+        // const isRamy = (item) => item.RamCur != null;
+        // const isshuf = (item) => item.ShufCur != null;
+        // const srtShuf = function (a, b) {
+        //   if (1 - a["ShufCur"] / a["ShufAve"] < 1 - b["ShufCur"] / b["ShufAve"]) {
+        //     return 1;
+        //   } else if (1 - a["ShufCur"] / a["ShufAve"] > 1 - b["ShufCur"] / b["ShufAve"]) {
+        //     return -1;
+        //   }
+        //   return 0;
+        // }
+        // const srtRamy = function (a, b) {
+        //   if (1 - a["RamCur"] / a["RamAve"] < 1 - b["RamCur"] / b["RamAve"]) {
+        //     return 1;
+        //   } else if (1 - a["RamCur"] / a["RamAve"] > 1 - b["RamCur"] / b["RamAve"]) {
+        //     return -1;
+        //   }
+        //   return 0;
+        // }
+        state.users = records;
+        console.log(state.users);
+        // if (state.net === "שופרסל") {
+        //   state.allProducts = records.filter(isshuf);
+        //   state.allProducts = state.allProducts.sort(srtShuf);
+        // }
+        // else {
+        //   state.allProducts = records.filter(isRamy);
+        //   state.allProducts = state.allProducts.sort(srtRamy);
+        // }
+      });
+  }
+  // function addUser(user) {
+  //   fetch('http://localhost:3001/Users')
+  //     .then(response => {
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       const records = data.map((item) => {
+  //         return ({
+  //           userName: item.userName, password: item.password
+  //         })
+  //       });
+  //       state.users = records;
+  //       console.log(state.users);
+  //     });
+  // }
   return (
     <ProductContext.Provider value={{ state }}>
       <ProductDispath.Provider value={{ dispath }}>

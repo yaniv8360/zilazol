@@ -51,14 +51,14 @@ export default function Products() {
         });
         const isRamy = (item) => item.RamCur != null;
         const isshuf = (item) => item.ShufCur != null;
-        console.log(records);
+        // console.log(records);
         // setMerchants1(records);
-        console.log(records);
+        // console.log(records);
         state.allItems = records;
         if (state.net === "שופרסל") {
           state.filteredItems = records.filter(isshuf);
           state.filteredItems = state.filteredItems.sort(srtShuf);
-          console.log(state.filteredItems);
+          // console.log(state.filteredItems);
         }
         else {
           state.filteredItems = records.filter(isRamy);
