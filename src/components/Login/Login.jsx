@@ -2,11 +2,12 @@ import React, { useContext, useState } from "react";
 // import "./Basket.css";
 import { Link } from "react-router-dom";
 import { HiArrowRight } from "react-icons/hi";
+import "./Login.css";
 import { ProductContext, ProductDispath } from "../Context/ContextProvider";
-import BasketItem from "./BasketItem";
-import Offer from "./Offer";
-import OfferBadge from "./OfferBadge";
-import SendProducts from "./SendProducts";
+// import BasketItem from "./BasketItem";
+// import Offer from "./Offer";
+// import OfferBadge from "./OfferBadge";
+// import SendProducts from "./SendProducts";
 
 export default function Login() {
   const { state } = useContext(ProductContext);
@@ -82,33 +83,33 @@ export default function Login() {
           </div>
         </div>
       ) : ( */}
-      <div className="favorite_empty">
+      {/* <div className="favorite_empty">
         <img
           className="favorite_empty_img"
           src="images/empty-cart.png"
           alt=""
         />
         <span className="favorite_empty_title">سبد خرید خالی است</span>
-      </div>
-      <div>
+      </div> */}
+      <div className="login_Place">
         <form onSubmit={handleSubmit}>
-          <label htmlFor="username">Username: </label>
+          <label htmlFor="username">שם משתמש: </label>
           <input
             type="text"
             value={username}
-            placeholder="enter a username"
+            placeholder="הכנס שם משתמש"
             onChange={({ target }) => setUsername(target.value)}
           />
           <div>
-            <label htmlFor="password">password: </label>
+            <label htmlFor="password">סיסמה: </label>
             <input
               type="password"
               value={password}
-              placeholder="enter a password"
+              placeholder="הכנס סיסמה"
               onChange={({ target }) => setPassword(target.value)}
             />
           </div>
-          <button type="submit">Login</button>
+          <button type="submit">התחבר</button>
         </form>
       </div>
       {/* )} */}

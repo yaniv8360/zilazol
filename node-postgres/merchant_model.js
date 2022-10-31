@@ -8,8 +8,9 @@ const pool = new Pool({
   port: 5432,
 });
 
-const getMerchants = (table) => {
+const getMerchants = (table, user) => {
   console.log(table);
+  console.log("cishalon");
   if (table == "Products") {
     return new Promise(function (resolve, reject) {
       pool.query('SELECT * FROM public."ProductsWithPrices" ORDER BY "ItemCode" ASC LIMIT 1000;', (error, results) => {
@@ -23,6 +24,16 @@ const getMerchants = (table) => {
   if (table == "Users") {
     return new Promise(function (resolve, reject) {
       pool.query('SELECT * FROM public."UsersT" ORDER BY "userName" ASC;', (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        resolve(results.rows);
+      })
+    })
+  }
+  if (table == "FavoritsT") {
+    return new Promise(function (resolve, reject) {
+      pool.query('SELECT "productID" FROM public."FavoritsT"  WHERE "userName" = $1;',[user], (error, results) => {
         if (error) {
           reject(error)
         }

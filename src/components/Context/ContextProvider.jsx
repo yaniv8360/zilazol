@@ -84,34 +84,62 @@ const sumPriceWithSend = (totalPrice, offerPrice = 0) => {
 
 const reduce = (state, action) => {
   function addUser(user) {
-    fetch('http://localhost:3001/addUsers/'+user, { method: 'POST', })
+    fetch('http://localhost:3001/addUsers/' + user, { method: 'POST', })
       .then(response => {
         return response.text();
       })
       .then(data => {
         alert(data);
-      // .then(response => {
-      //     return response.json();
-      //   })
-      // .then(data => {
-      //   const records = data.map((item) => {
-      //     return ({
-      //       userName: item.userName, password: item.password
-      //     })
-      //   });
-      //   state.users = records;
-      //   console.log(state.users);
+        // .then(response => {
+        //     return response.json();
+        //   })
+        // .then(data => {
+        //   const records = data.map((item) => {
+        //     return ({
+        //       userName: item.userName, password: item.password
+        //     })
+        //   });
+        //   state.users = records;
+        //   console.log(state.users);
       });
   }
+  function getFavoritsFromDB(user) {
+    fetch('http://localhost:3001/FavoritsT/' + user)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        const records = data.map((item) => {
+          return (
+            item.productID
+          )
+        });
+        state.favorites = records;
+        console.log(state.favorites);
+      });
+  }
+  // function getFavoritsFromDB(user) {
+  //   fetch('http://localhost:3001/addUsers/' + user, { method: 'POST', })
+  //     .then(response => {
+  //       return response.text();
+  //     })
+  //     .then(data => {
+  //       alert(data);
+  //     });
+  // }
   switch (action.type) {
     case "ADD_FAVORITE": {
-      state.allProducts.forEach((product) => {
-        if (product.id === action.payload) {
-          product.isInterest = !product.isInterest;
-          state.favorites = allProducts.filter((product) => product.isInterest);
-          state.isFavorite = true;
-        }
-      });
+      // state.allProducts.forEach((product) => {
+      //   if (product.id === action.payload) {
+      //     product.isInterest = !product.isInterest;
+      //     state.favorites = allProducts.filter((product) => product.isInterest);
+      //     state.isFavorite = true;
+      //   }
+      // });
+      if (state.user != "") {
+        state.favorites = [action.payload, ...state.favorites];
+
+      }
       return {
         ...state
       };
@@ -220,6 +248,7 @@ const reduce = (state, action) => {
     case "LOGIN_USER": {
       state.userName = action.payload;
       console.log(state.userName);
+      getFavoritsFromDB(state.userName);
       return {
         ...state
       };
@@ -230,6 +259,7 @@ const reduce = (state, action) => {
       console.log(state.userName);
       state.users = [{ userName: state.userName, password: action.payload.split(":")[1] }, ...state.users]
       console.log(state.users);
+      state.favorites = [];
       // getUsers();
       return {
         ...state
@@ -263,7 +293,7 @@ export default function ContextProvider({ children }) {
     getUsers();
   }, []);
   function getMerchant() {
-    fetch('http://localhost:3001/Products')
+    fetch('http://localhost:3001/Products/1')
       .then(response => {
         return response.json();
       })
@@ -347,7 +377,7 @@ export default function ContextProvider({ children }) {
   // console.log(state.allProducts);
 
   function getUsers() {
-    fetch('http://localhost:3001/Users')
+    fetch('http://localhost:3001/Users/1')
       .then(response => {
         return response.json();
       })
@@ -392,6 +422,7 @@ export default function ContextProvider({ children }) {
         // }
       });
   }
+
   // function addUser(user) {
   //   fetch('http://localhost:3001/Users')
   //     .then(response => {

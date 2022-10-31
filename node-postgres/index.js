@@ -10,8 +10,8 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/:table', (req, res) => {
-  merchant_model.getMerchants(req.params.table)
+app.get('/:table/:user', (req, res) => {
+  merchant_model.getMerchants(req.params.table, req.params.user)
     .then(response => {
       res.status(200).send(response);
     })

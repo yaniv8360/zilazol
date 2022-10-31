@@ -33,7 +33,7 @@ export default function Products() {
     // }
   }, [state]);
   function getMerchant() {
-    fetch('http://localhost:3001/Products')
+    fetch('http://localhost:3001/Products/1')
       .then(response => {
         return response.json();
       })
