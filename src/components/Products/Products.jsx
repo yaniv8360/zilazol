@@ -6,30 +6,30 @@ import Card from "./Card/Card";
 import SearchBar from "../SearchBar/SearchBar";
 import Footer from "../Footer/Footer";
 
-const srtShuf = function(a, b) {
-  if (1-a["ShufCur"]/a["ShufAve"] < 1-b["ShufCur"]/b["ShufAve"]) {
+const srtShuf = function (a, b) {
+  if (1 - a["ShufCur"] / a["ShufAve"] < 1 - b["ShufCur"] / b["ShufAve"]) {
     return 1;
-  } else if (1-a["ShufCur"]/a["ShufAve"] > 1-b["ShufCur"]/b["ShufAve"]) {
+  } else if (1 - a["ShufCur"] / a["ShufAve"] > 1 - b["ShufCur"] / b["ShufAve"]) {
     return -1;
   }
   return 0;
 }
-const srtRamy = function(a, b) {
-  if (1-a["RamCur"]/a["RamAve"] < 1-b["RamCur"]/b["RamAve"]) {
+const srtRamy = function (a, b) {
+  if (1 - a["RamCur"] / a["RamAve"] < 1 - b["RamCur"] / b["RamAve"]) {
     return 1;
-  } else if (1-a["RamCur"]/a["RamAve"] > 1-b["RamCur"]/b["RamAve"]) {
+  } else if (1 - a["RamCur"] / a["RamAve"] > 1 - b["RamCur"] / b["RamAve"]) {
     return -1;
   }
   return 0;
 }
-export default function Products() {
+export default function Products(props) {
   const { state } = useContext(FilterContext);
   // const didMount = useRef(false);
   // state.init = "b";
   // getMerchant();
   useEffect(() => {
     // if (didMount.current == false) {
-      getMerchant();
+    getMerchant();
     // }
   }, [state]);
   function getMerchant() {
@@ -67,7 +67,9 @@ export default function Products() {
       });
 
   }
- 
+  console.log(props.user);
+
+  // props.fn("bob");
   console.log(state.filteredItems);
   const productsList = state.filteredItems.filter((product) => {
     return product.title.includes(state.searchKey) || !state.searchKey;
@@ -82,7 +84,7 @@ export default function Products() {
       </div>
       <div className="product_container">
         {productsList.length > 0 ? (
-          productsList.map((product) => <Card net = {state.net} key={product.id} {...product} />)
+          productsList.map((product) => <Card net={state.net} key={product.id} {...product} />)
         ) : (
           <div className="not_products">
             <img

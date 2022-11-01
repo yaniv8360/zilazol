@@ -44,7 +44,7 @@ const initialState = {
   offerMessage: "",
   net: "שופרסל",
   userName: "",
-  users: [{ userName: "bob", password: "123" }, { userName: "Alice", password: "132" }]
+  users: []
 };
 
 const sumPrice = (items, isOffer) => {
@@ -249,6 +249,7 @@ const reduce = (state, action) => {
       state.userName = action.payload;
       console.log(state.userName);
       getFavoritsFromDB(state.userName);
+      console.log(state.favorites);
       return {
         ...state
       };
@@ -265,6 +266,7 @@ const reduce = (state, action) => {
         ...state
       };
     }
+    
     case "OFFER_CODE": {
       if (offerCode.code === action.payload) {
         state.isEnterOfferCode = true;

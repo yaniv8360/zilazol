@@ -1,22 +1,53 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ProductContext, ProductDispath } from "../Context/ContextProvider";
 import "./FavoritePage.css";
 import { Link } from "react-router-dom";
 import { HiArrowRight } from "react-icons/hi";
 import FavoriteCard from "./FavoriteCard";
+import ContextFilter, { FilterContext, FilterDispath } from "../Context/ContextFilter";
 
-export default function FavoritePage() {
-  const { state } = useContext(ProductContext);
-  const { dispath } = useContext(ProductDispath);
+export default function FavoritePage(props) {
+  // const { state } = useContext(ProductContext);
+  const { state } = useContext(FilterContext);
+  const { dispath } = useContext(FilterDispath);
+  console.log(state.net);
+  console.log(state.allItems);
+  // console.log(state.favorites);
+  console.log(state.user);
+  console.log(props.user);
+  state.user = props.user;
+  useEffect(() => {
+    // setTimeout(() => {
+    //   dispath({ type: "GET_USER_FAVORITES" });
+    // }, 100);
+    // getUsers();
+    // dispath({ type: "GET_USER_FAVORITES" });
+    getFavoritsFromDB(state.user);
 
+  }, [state.favorites, state.user]);
+  function getFavoritsFromDB(user) {
+    fetch('http://localhost:3001/FavoritsT/' + user)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        const records = data.map((item) => {
+          return (
+            item.productID
+          )
+        });
+        state.favorites = records;
+        console.log(state.favorites);
+      });
+  }
   return (
     <>
       <div className="favorite_container_linkBar">
         <div className="favorite_linkBar">
-          <span>علاقه مندی ها</span>
+          <span>מועדפים</span>
           <Link className="favorite_backLink" to={"/"}>
             <HiArrowRight />
-            صفحه محصولات
+            חזור אחורה
           </Link>
         </div>
       </div>
@@ -33,7 +64,10 @@ export default function FavoritePage() {
             </div>
             <div className="favorite_container">
               {state.favorites.map((product) => (
-                <FavoriteCard key={product.id} {...product} />
+                // const fullProduct = state.allAllProducts.
+                // const fullProduct = state.allProducts.find((prod) => prod.id === product);
+
+                <FavoriteCard key={product} {...state.allItems.find((prod) => prod.id === product)} />
               ))}
             </div>
           </>

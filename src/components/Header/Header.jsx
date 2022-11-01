@@ -5,10 +5,13 @@ import { BsFillBookmarkHeartFill } from "react-icons/bs";
 import { ProductContext, ProductDispath } from "../Context/ContextProvider";
 import { Link, useLocation } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
+import { FilterContext, FilterDispath } from "../Context/ContextFilter";
 
 function Header() {
-  const { state } = useContext(ProductContext);
-  const { dispath } = useContext(ProductDispath);
+  // const { state } = useContext(ProductContext);
+  const { state } = useContext(FilterContext);
+  // const { dispath } = useContext(ProductDispath);
+  const { dispath } = useContext(FilterDispath);
   // Get location for hide & show SearchBar Component
   const location = useLocation();
   const { pathname } = location;
@@ -16,16 +19,16 @@ function Header() {
   // run only if state changes and Not Mount
   const didMount = useRef(false);
   useEffect(() => {
-    if (didMount.current) {
-      setTimeout(() => {
-        dispath({ type: "REMOVE_CLASS" });
-      }, 1000);
-    } else {
-      didMount.current = true;
-    }
+    // if (didMount.current) {
+    //   setTimeout(() => {
+    //     dispath({ type: "REMOVE_CLASS" });
+    //   }, 1000);
+    // } else {
+    //   didMount.current = true;
+    // }
   }, [dispath, state.favorites, state]);
 
-  const handleClick = () => {}
+  const handleClick = () => { }
   //   setTimeout(() => {
   //     dispath({ type: "CHANGE_NET" });
   //   }, 1000);
@@ -66,15 +69,15 @@ function Header() {
         </div> */}
         <div className="search_header">{pathname === "/" && <SearchBar />}</div>
         <div className="icon_Sopping_box">
-          <Link to={"/basket"} className="shoppe_icon_box">
+          {/* <Link to={"/basket"} className="shoppe_icon_box">
             <AiOutlineShopping className="shop_icon" />
             {state.basket.length > 0 && (
               <span className="badge_shope">{state.basket.length}</span>
             )}
-          </Link>
+          </Link> */}
           <Link
             to={"/favorite"}
-            className={`mark_icon_box ${state.isFavorite ? "tada" : ""}`}
+            className={`mark_icon_box ${state.favorites.length > 0 ? "tada" : ""}`}
           >
             <BsFillBookmarkHeartFill className="mark_icon" />
             {state.favorites.length > 0 && (

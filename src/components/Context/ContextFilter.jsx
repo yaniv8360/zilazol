@@ -26,27 +26,28 @@ let allAllProducts = [];
 console.log(allProducts);
 
 const initialFilterState = {
-  filteredItems: [...allProducts],
-  allItems: [...allAllProducts],
+  filteredItems: [],
+  allItems: [],
   searchKey: "",
   net: "שופרסל",
   userName: "",
-  init: "a"
+  favorites: [],
+  users: [],
 };
 const isRamy = (item) => item.RamCur != null;
 const isshuf = (item) => item.ShufCur != null;
-const srtShuf = function(a, b) {
-  if (1-a["ShufCur"]/a["ShufAve"] < 1-b["ShufCur"]/b["ShufAve"]) {
+const srtShuf = function (a, b) {
+  if (1 - a["ShufCur"] / a["ShufAve"] < 1 - b["ShufCur"] / b["ShufAve"]) {
     return 1;
-  } else if (1-a["ShufCur"]/a["ShufAve"] > 1-b["ShufCur"]/b["ShufAve"]) {
+  } else if (1 - a["ShufCur"] / a["ShufAve"] > 1 - b["ShufCur"] / b["ShufAve"]) {
     return -1;
   }
   return 0;
 }
-const srtRamy = function(a, b) {
-  if (1-a["RamCur"]/a["RamAve"] < 1-b["RamCur"]/b["RamAve"]) {
+const srtRamy = function (a, b) {
+  if (1 - a["RamCur"] / a["RamAve"] < 1 - b["RamCur"] / b["RamAve"]) {
     return 1;
-  } else if (1-a["RamCur"]/a["RamAve"] > 1-b["RamCur"]/b["RamAve"]) {
+  } else if (1 - a["RamCur"] / a["RamAve"] > 1 - b["RamCur"] / b["RamAve"]) {
     return -1;
   }
   return 0;
@@ -63,6 +64,30 @@ const filterItemsHandler = (key) => {
 };
 
 const filterReduce = (state, action) => {
+  function addUser(user) {
+    fetch('http://localhost:3001/addUsers/' + user, { method: 'POST', })
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        alert(data);
+      });
+  }
+  function getFavoritsFromDB(user) {
+    fetch('http://localhost:3001/FavoritsT/' + user)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        const records = data.map((item) => {
+          return (
+            item.productID
+          )
+        });
+        state.favorites = records;
+        console.log(state.favorites);
+      });
+  }
   switch (action.type) {
     case "SEARCH_KEYWORD":
       state.searchKey = action.payload;
@@ -114,6 +139,37 @@ const filterReduce = (state, action) => {
       return {
         ...filterItemsHandler("حبوبات")
       };
+    case "LOGIN_USER": {
+      state.userName = action.payload;
+      console.log(state.userName);
+      // getFavoritsFromDB(state.userName);
+      // console.log(state.favorites);
+      return {
+        ...state
+      };
+    }
+    case "NEW_USER": {
+      addUser(action.payload);
+      state.userName = action.payload.split(":")[0];
+      console.log(state.userName);
+      state.users = [{ userName: state.userName, password: action.payload.split(":")[1] }, ...state.users]
+      console.log(state.users);
+      state.favorites = [];
+      // getUsers();
+      return {
+        ...state
+      };
+    }
+    case "GET_USER_FAVORITES": {
+      // state.userName = action.payload;
+      // console.log(state.userName);
+      getFavoritsFromDB(state.userName);
+      console.log(state.userName);
+      console.log(state.favorites);
+      return {
+        ...state
+      };
+    }
     default:
       return state;
   }
@@ -123,12 +179,13 @@ export const FilterContext = createContext();
 export const FilterDispath = createContext();
 
 export default function ContextFilter({ children }) {
-  console.log("came76");
+  // console.log("came76");
   // const [merchants1, setMerchants1] = useState(false);
   const [state, dispath] = useReducer(filterReduce, initialFilterState);
 
   useEffect(() => {
     getMerchant();
+    getUsers();
   }, []);
   function getMerchant() {
     fetch('http://localhost:3001/Products/1')
@@ -183,6 +240,24 @@ export default function ContextFilter({ children }) {
       });
     // console.log(merchants);
 
+  }
+  function getUsers() {
+    fetch('http://localhost:3001/Users/1')
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        const records = data.map((item) => {
+          return ({
+            userName: item.userName, password: item.password
+          })
+        });
+        state.users = records;
+        console.log(state.users);
+      });
+      setTimeout(() => {
+        dispath({ type: "ALL" });
+      }, 100);
   }
   // console.log(initialFilterState)
   // console.log(merchants);

@@ -14,12 +14,15 @@ import React, { useState, useEffect } from 'react';
 
 
 function App() {
+  const [user, setUser] = useState("");
   let router = useRoutes([
-    { path: '/', element: <Products /> },
+    // productsList.map((product) => <Card net = {state.net} key={product.id} {...product} />)
+
+    { path: '/', element: <Products user={user} /> },
     { path: '/:id', element: <Details /> },
-    { path: '/favorite', element: <FavoritePage /> },
+    { path: '/favorite', element: <FavoritePage user={user} /> },
     { path: '/basket', element: <Basket /> },
-    { path: '/login', element: <Login /> },
+    { path: '/login', element: <Login user={user} fn={(usr) => setUser(usr)} /> },
     { path: '*', element: <Navigate to={'/'} /> },
   ])
   return (
@@ -345,11 +348,11 @@ function getMerchant12() {
       console.log(z);
       // return(data[0].email);
     });
-    return(z);
+  return (z);
 }
 // const x = 'no_succesd';
 let str42 = 'abcdefghijklmnopqrst';
-export {str42}
+export { str42 }
 
 // export { x };
 

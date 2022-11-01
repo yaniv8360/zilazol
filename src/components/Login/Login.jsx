@@ -1,32 +1,35 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 // import "./Basket.css";
 import { Link } from "react-router-dom";
 import { HiArrowRight } from "react-icons/hi";
 import "./Login.css";
 import { ProductContext, ProductDispath } from "../Context/ContextProvider";
+import { FilterContext, FilterDispath } from "../Context/ContextFilter";
 // import BasketItem from "./BasketItem";
 // import Offer from "./Offer";
 // import OfferBadge from "./OfferBadge";
 // import SendProducts from "./SendProducts";
 
-export default function Login() {
-  const { state } = useContext(ProductContext);
-  const { dispath } = useContext(ProductDispath);
+export default function Login(props) {
+  const { state } = useContext(FilterContext);
+  const { dispath } = useContext(FilterDispath);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
   const userExists = (item) => item.userName == username && item.password == password;
   const userNameExists = (item) => item.userName == username;
+  // const fn1 = props.fn;
+  useEffect(() => {
+    getUsers();
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     // const usr = { username: username, password: password };
     console.log(state.users.filter(userExists));
     if (state.users.filter(userNameExists).length != 0) {
-
-
       if (state.users.filter(userExists).length != 0) {
         dispath({ type: "LOGIN_USER", payload: username });
-
+        props.fn(username);
       }
       else {
         alert("userName " + username + " exists but password is wrong");
@@ -35,7 +38,24 @@ export default function Login() {
       dispath({ type: "NEW_USER", payload: username + ":" + password });
     }
   };
-
+  function getUsers() {
+    fetch('http://localhost:3001/Users/1')
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        const records = data.map((item) => {
+          return ({
+            userName: item.userName, password: item.password
+          })
+        });
+        state.users = records;
+        console.log(state.users);
+      });
+    setTimeout(() => {
+      dispath({ type: "ALL" });
+    }, 100);
+  }
   return (
     <>
       <div className="favorite_container_linkBar">
