@@ -60,7 +60,7 @@ export default function FavoritePage(props) {
                 onClick={() => dispath({ type: "REMOVE_ALL_FAVORITE" })}
                 className="favorite_removeAll"
               >
-                حذف همه
+                מחק את כל המועדפים
               </button>
             </div>
             <div className="favorite_container">
@@ -79,7 +79,7 @@ export default function FavoritePage(props) {
               src="images/empty_favorite.svg"
               alt=""
             />
-            <span className="favorite_empty_title">علاقه مندی ها خالی است</span>
+            <span className="favorite_empty_title">רשימת המועדפים ריקה כעת</span>
           </div>
         )}
       </div>

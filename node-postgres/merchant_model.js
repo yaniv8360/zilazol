@@ -68,16 +68,29 @@ const updateDB = (table, user, prod) => {
     })
   }
 
-  // if (table == "Users") {
-  //   return new Promise(function (resolve, reject) {
-  //     pool.query('SELECT * FROM public."UsersT" ORDER BY "userName" ASC;', (error, results) => {
-  //       if (error) {
-  //         reject(error)
-  //       }
-  //       resolve(results.rows);
-  //     })
-  //   })
-  // }
+}
+const deleteFromDB = (table, user, prod) => {
+  console.log(user);
+  if (table == "FavoritsT") {
+    return new Promise(function (resolve, reject) {
+      pool.query('DELETE FROM public."FavoritsT" WHERE "FavoritsT"."productID" = $1 AND "FavoritsT"."userName" = $2;', [prod, user], (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        resolve('המוצר המועדף נמחק מרשימת המועדפים שלך');
+      })
+    })
+  }
+  if (table == "FavoritsTAll") {
+    return new Promise(function (resolve, reject) {
+      pool.query('DELETE FROM public."FavoritsT" WHERE "FavoritsT"."userName" = $1;', [user], (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        resolve('רשימת המוצרים המועדפים שלך נוקתה');
+      })
+    })
+  }
 }
 // const addFavoriteToDB = (prod, user) => {
 //   console.log(user);
@@ -132,7 +145,7 @@ const updateDB = (table, user, prod) => {
 // }
 
 module.exports = {
-  getMerchants, updateDB
+  getMerchants, updateDB, deleteFromDB
   // createMerchant,
   // deleteMerchant,
 }

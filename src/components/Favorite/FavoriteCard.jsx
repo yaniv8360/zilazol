@@ -23,10 +23,10 @@ export default function FavoriteCard(props) {
             </Link>
             {/* {(props.user != null) && ( */}
             <button
-              onClick={() => dispath({ type: "ADD_FAVORITE", payload: props.id })}
+              onClick={() => dispath({ type: "REMOVE_FAVORITE", payload: props.id })}
               className="favorite_button"
             >
-              حذف
+              מחק מועדף
             </button>
           </div>)}
     </>

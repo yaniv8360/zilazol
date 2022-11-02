@@ -29,6 +29,15 @@ app.post('/:table/:user/:prod', (req, res) => {
     res.status(500).send(error);
   })
 })
+app.delete('/:table/:user/:prod', (req, res) => {
+  merchant_model.deleteFromDB(req.params.table, req.params.user, req.params.prod)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
 
 // app.delete('/merchants/:id', (req, res) => {
 //   merchant_model.deleteMerchant(req.params.id)

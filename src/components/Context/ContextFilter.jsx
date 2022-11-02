@@ -82,6 +82,25 @@ const filterReduce = (state, action) => {
         alert(data);
       });
   }
+  function removeFavorite(prod, user) {
+    fetch('http://localhost:3001/FavoritsT/' + user + '/' + prod, { method: 'DELETE', })
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        alert(data);
+      });
+  }
+  function removeAllFavorites(user) {
+    fetch('http://localhost:3001/FavoritsTAll/' + user + '/1', { method: 'DELETE', })
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        alert(data);
+      });
+  }
+  
   function getFavoritsFromDB(user) {
     fetch('http://localhost:3001/FavoritsT/' + user)
       .then(response => {
@@ -180,9 +199,30 @@ const filterReduce = (state, action) => {
       };
     }
     case "ADD_FAVORITE": {
-      if (state.user != "") {
+      if (state.user != "" && state.favorites.filter
+        (item => item == action.payload).length == 0) {
         addFavorite(action.payload, state.user);
         state.favorites = [action.payload, ...state.favorites];
+      }
+      return {
+        ...state
+      };
+    }
+    case "REMOVE_FAVORITE": {
+      if (state.user != "" && state.favorites.filter
+        (item => item == action.payload).length > 0) {
+        removeFavorite(action.payload, state.user);
+        state.favorites = state.favorites.filter
+        (item => item != action.payload);
+      }
+      return {
+        ...state
+      };
+    }
+    case "REMOVE_ALL_FAVORITE": {
+      if (state.user != "" && state.favorites.length>0) {
+        removeAllFavorites(state.user);
+        state.favorites = [];
       }
       return {
         ...state
