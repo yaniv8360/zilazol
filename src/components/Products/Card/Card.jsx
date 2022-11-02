@@ -12,9 +12,9 @@ export default function Card(props) {
   // const { state } = useContext(ProductContext);
   const { state } = useContext(FilterContext);
   // const { state1 } = useContext(FilterContext);
-  console.log(props.isInterest);
+  // console.log(props.isInterest);
   if (props.isInterest) {
-    console.log(props.isInterest);
+    // console.log(props.isInterest);
   }
 
   const datas = state.allItems.find((product) => product.id === props.id);

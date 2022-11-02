@@ -17,7 +17,11 @@ export default function FavoriteCard(props) {
               <img className="favorite_img" src={props.image} alt="favorite_image" />
               <div className="favorite_content">
                 <div className="favorite_title">
-                  <span>{props.title}</span>
+                  <span>{props.title}<br></br></span>
+                  {props.RamCur != null && (
+                  <span>מחיר רמי לוי: {Number(props.RamCur).toFixed(1)} ש"ח<br></br></span>)}
+                  {props.ShufCur != null && (
+                  <span>מחיר שופרסל: {Number(props.ShufCur).toFixed(1)} ש"ח<br></br></span>)}
                 </div>
               </div>
             </Link>

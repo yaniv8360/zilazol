@@ -17,10 +17,10 @@ export default function Basket() {
     <>
       <div className="favorite_container_linkBar">
         <div className="favorite_linkBar">
-          <span>سبد خرید</span>
+          <span>סל הקניות</span>
           <Link className="favorite_backLink" to={"/"}>
             <HiArrowRight />
-            صفحه محصولات
+            חזור אחורה
           </Link>
         </div>
         {state.basket.length > 0 && (
@@ -28,7 +28,7 @@ export default function Basket() {
             <div className="free_send_title">
               <img src="images/sound(1).jpg" alt="" />
               <span>
-                هزینه ارسال برای خرید های بالای 100,000 تومان رایگان می باشد.
+                שמחים שבחרתם מערכת זיל הזול!
               </span>
             </div>
           </div>
@@ -38,15 +38,15 @@ export default function Basket() {
         <div className="basket_container">
           <div className="basket_itemBox">
             {state.basket.map((product) => (
-              <BasketItem key={product.id} {...product} />
+              <BasketItem net = {state.net} key={product.id} {...product} />
             ))}
           </div>
           <div className="basket_priceBox">
-            <OfferBadge />
+            {/* <OfferBadge /> */}
             <div className="basket_price">
               <span>جمع سبد خرید</span>
               <span>|</span>
-              <span>{state.totalPrice.toLocaleString()} تومان</span>
+              <span>{state.totalPrice.toLocaleString()} ש"ח</span>
             </div>
             {/* {state.totalPriceAfterOffer > 0 && (
               <div className="basket_offer">
@@ -60,7 +60,11 @@ export default function Basket() {
               <span>مجموع مبلغ قابل پرداخت</span>
               <span>{state.totalPriceFainal.toLocaleString()} تومان</span>
             </div> */}
-            <button className="basket_button_buy">ادامه فرایند خرید</button>
+            {/* <Link className="favorite_backLink" to={"/"}>
+            <HiArrowRight />
+            חזור אחורה
+          </Link> */}
+            <Link className="basket_button_buy" to={"/"}>המשך בתהליך הרכישה</Link>
             <button
               onClick={() => dispath({ type: "EMPTY_BASKET" })}
               className="basket_button_remove"

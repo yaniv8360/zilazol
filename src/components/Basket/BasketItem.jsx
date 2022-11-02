@@ -10,7 +10,11 @@ export default function BasketItem(props) {
         </div>
         <div className="basket_content">
           <span className="basket_title">{props.title}</span>
-          <span>{(props.price * props.count).toLocaleString()} تومان</span>
+          {props.net === "שופרסל" ? (<span>
+            {(props.ShufCur * props.count).toLocaleString()} ש"ח</span>) :
+            (<span>{(props.RamCur * props.count).toLocaleString()} ש"ח</span>)
+            // <span>{(props.price * props.count).toLocaleString()} ש"ח</span>
+          }
         </div>
       </Link>
       <div className="basket_counter">

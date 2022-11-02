@@ -34,7 +34,8 @@ const initialFilterState = {
   favorites: [],
   users: [],
   basket: [],
-  totalPrice: 0
+  totalPrice: 0,
+  specials: []
 };
 const isRamy = (item) => item.RamCur != null;
 const isshuf = (item) => item.ShufCur != null;
@@ -118,9 +119,27 @@ const filterReduce = (state, action) => {
         console.log(state.favorites);
       });
   }
+  function getSpecialsFromDB(user) {
+    fetch('http://localhost:3001/usersViewsT/' + user)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        const records = data.map((item) => {
+          return ({ "id": item.productID, "count": item.count })
+        });
+        state.specials = records;
+        console.log(state.specials);
+      });
+  }
   const sumPrice = (items) => {
     const totalPrice = items.reduce((totalPrice, product) => {
-      return totalPrice + product.price * product.count;
+      if (state.net === "שופרסל")
+        return totalPrice + product.ShufCur * product.count;
+      else {
+        return totalPrice + product.RamCur * product.count;
+      }
+
     }, 0);
 
     // if (isOffer) {
@@ -156,10 +175,13 @@ const filterReduce = (state, action) => {
         state.filteredItems = state.allItems.filter(isshuf);
         state.filteredItems = state.filteredItems.sort(srtShuf);
         // console.log(state.net)
-        return {
-          ...state
-        };
       }
+      state.basket = state.basket.forEach((product) => (product.count = 1));
+      state.basket = [];
+      state.totalPrice = 0;
+      return {
+        ...state
+      };
     }
     case "ALL":
       if (state.net === "שופרסל") {
@@ -193,6 +215,7 @@ const filterReduce = (state, action) => {
       state.userName = action.payload;
       console.log(state.userName);
       // getFavoritsFromDB(state.userName);
+      // getFavoritsFromDB(state.userName);
       // console.log(state.favorites);
       return {
         ...state
@@ -206,6 +229,14 @@ const filterReduce = (state, action) => {
       console.log(state.users);
       state.favorites = [];
       // getUsers();
+      return {
+        ...state
+      };
+    }
+    case "GET_USER_SPECIALS": {
+      getSpecialsFromDB(state.userName);
+      // console.log(state.userName);
+      // console.log(state.specials);
       return {
         ...state
       };

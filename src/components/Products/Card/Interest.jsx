@@ -11,7 +11,7 @@ export default function Interest(props) {
   // const isAddFavorite = state.allItems.find(
   //   (product) => product.id === props.id
   if (props.isInterest) {
-    console.log(props.isInterest);
+    // console.log(props.isInterest);
   }
   // );
   return (
