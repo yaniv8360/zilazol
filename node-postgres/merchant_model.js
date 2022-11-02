@@ -33,7 +33,7 @@ const getMerchants = (table, user) => {
   }
   if (table == "FavoritsT") {
     return new Promise(function (resolve, reject) {
-      pool.query('SELECT "productID" FROM public."FavoritsT"  WHERE "userName" = $1;',[user], (error, results) => {
+      pool.query('SELECT "productID" FROM public."FavoritsT"  WHERE "userName" = $1;', [user], (error, results) => {
         if (error) {
           reject(error)
         }
@@ -42,18 +42,32 @@ const getMerchants = (table, user) => {
     })
   }
 }
-const addUserToDB = (user) => {
+const updateDB = (table, user, prod) => {
   console.log(user);
-  const userName = user.split(":")[0];
-  const password = user.split(":")[1];
-  return new Promise(function (resolve, reject) {
-    pool.query('INSERT INTO public."UsersT" VALUES ($1, $2);', [userName, password], (error, results) => {
-      if (error) {
-        reject(error)
-      }
-      resolve('user is added to the users DB table');
+  if (table == "UsersT") {
+    const userName = user.split(":")[0];
+    const password = user.split(":")[1];
+    return new Promise(function (resolve, reject) {
+      pool.query('INSERT INTO public."UsersT" VALUES ($1, $2);', [userName, password], (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        resolve('user is added to the users DB table');
+      })
     })
-  })
+  }
+  if (table == "FavoritsT") {
+    return new Promise(function (resolve, reject) {
+      // pool.query('INSERT INTO public."UsersT" VALUES ($1, $2);', [userName, password], (error, results) => {
+      pool.query('INSERT INTO public."FavoritsT" VALUES ($1, $2);', [prod, user], (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        resolve('favorite for current user is added to the favorites DB table');
+      })
+    })
+  }
+
   // if (table == "Users") {
   //   return new Promise(function (resolve, reject) {
   //     pool.query('SELECT * FROM public."UsersT" ORDER BY "userName" ASC;', (error, results) => {
@@ -65,6 +79,20 @@ const addUserToDB = (user) => {
   //   })
   // }
 }
+// const addFavoriteToDB = (prod, user) => {
+//   console.log(user);
+//   const userName = user.split(":")[0];
+//   const password = user.split(":")[1];
+//   return new Promise(function (resolve, reject) {
+//     // pool.query('INSERT INTO public."UsersT" VALUES ($1, $2);', [userName, password], (error, results) => {
+//     pool.query('INSERT INTO public."FavoritsT" VALUES ($1, $2);', [prod, user], (error, results) => {
+//       if (error) {
+//         reject(error)
+//       }
+//       resolve('favorite for current user is added to the favorites DB table');
+//     })
+//   })
+// }
 
 // const getUsers = () => {
 //   return new Promise(function (resolve, reject) {
@@ -104,7 +132,7 @@ const addUserToDB = (user) => {
 // }
 
 module.exports = {
-  getMerchants, addUserToDB
+  getMerchants, updateDB
   // createMerchant,
   // deleteMerchant,
 }

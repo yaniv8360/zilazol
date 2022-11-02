@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./Products.css";
 import Filter from "./Filter/Filter";
 import { FilterContext } from "../Context/ContextFilter";
 import Card from "./Card/Card";
 import SearchBar from "../SearchBar/SearchBar";
 import Footer from "../Footer/Footer";
+
+
 
 const srtShuf = function (a, b) {
   if (1 - a["ShufCur"] / a["ShufAve"] < 1 - b["ShufCur"] / b["ShufAve"]) {
@@ -23,13 +25,20 @@ const srtRamy = function (a, b) {
   return 0;
 }
 export default function Products(props) {
+  // const [prod, setProd] = useState("");
   const { state } = useContext(FilterContext);
+  const prodExistsInFavorits = (prod) => state.favorites.find((item) => {
+    return item === prod;
+  }) != null;
+  // ).length > 0;
   // const didMount = useRef(false);
   // state.init = "b";
   // getMerchant();
   useEffect(() => {
     // if (didMount.current == false) {
     getMerchant();
+    if (props.user != "")
+      getFavoritsFromDB(props.user);
     // }
   }, [state]);
   function getMerchant() {
@@ -74,6 +83,22 @@ export default function Products(props) {
   const productsList = state.filteredItems.filter((product) => {
     return product.title.includes(state.searchKey) || !state.searchKey;
   });
+  function getFavoritsFromDB(user) {
+    fetch('http://localhost:3001/FavoritsT/' + user)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        const records = data.map((item) => {
+          return (
+            item.productID
+          )
+        });
+        state.favorites = records;
+        console.log(state.favorites);
+      });
+  }
+  console.log(state.favorites);
   return (
     <>
       <Filter />
@@ -84,7 +109,11 @@ export default function Products(props) {
       </div>
       <div className="product_container">
         {productsList.length > 0 ? (
-          productsList.map((product) => <Card net={state.net} key={product.id} {...product} />)
+          productsList.map((product) =>
+            <Card net={state.net}
+              // isInterest={state.favorites.filter(item => item === '16000281684').length > 0}
+              key={product.id} {...product} 
+              isInterest={state.favorites.filter(item => item === product.id).length > 0} />)
         ) : (
           <div className="not_products">
             <img

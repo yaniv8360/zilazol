@@ -65,7 +65,16 @@ const filterItemsHandler = (key) => {
 
 const filterReduce = (state, action) => {
   function addUser(user) {
-    fetch('http://localhost:3001/addUsers/' + user, { method: 'POST', })
+    fetch('http://localhost:3001/UsersT/' + user + '/1', { method: 'POST', })
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        alert(data);
+      });
+  }
+  function addFavorite(prod, user) {
+    fetch('http://localhost:3001/FavoritsT/' + user + '/' + prod, { method: 'POST', })
       .then(response => {
         return response.text();
       })
@@ -170,6 +179,15 @@ const filterReduce = (state, action) => {
         ...state
       };
     }
+    case "ADD_FAVORITE": {
+      if (state.user != "") {
+        addFavorite(action.payload, state.user);
+        state.favorites = [action.payload, ...state.favorites];
+      }
+      return {
+        ...state
+      };
+    }
     default:
       return state;
   }
@@ -202,8 +220,11 @@ export default function ContextFilter({ children }) {
             imag = item.Image;
           }
           return ({
+            // id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode,
+            // count: 1, isInterest: false, category: 'سبزیجات', RamAve: item.RamAve,
+            // RamCur: item.RamCur, ShufAve: item.ShufAve, ShufCur: item.ShufCur
             id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode,
-            count: 1, isInterest: false, category: 'سبزیجات', RamAve: item.RamAve,
+            count: 1, category: 'سبزیجات', RamAve: item.RamAve,
             RamCur: item.RamCur, ShufAve: item.ShufAve, ShufCur: item.ShufCur
           })
         });
@@ -230,7 +251,7 @@ export default function ContextFilter({ children }) {
         // }
         setTimeout(() => {
           dispath({ type: "ALL" });
-        }, 100);
+        }, 1000);
 
 
         // state.filteredItems = records.filter(isshuf);
@@ -255,9 +276,9 @@ export default function ContextFilter({ children }) {
         state.users = records;
         console.log(state.users);
       });
-      setTimeout(() => {
-        dispath({ type: "ALL" });
-      }, 100);
+    setTimeout(() => {
+      dispath({ type: "ALL" });
+    }, 100);
   }
   // console.log(initialFilterState)
   // console.log(merchants);

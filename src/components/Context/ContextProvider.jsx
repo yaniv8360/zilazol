@@ -84,7 +84,7 @@ const sumPriceWithSend = (totalPrice, offerPrice = 0) => {
 
 const reduce = (state, action) => {
   function addUser(user) {
-    fetch('http://localhost:3001/addUsers/' + user, { method: 'POST', })
+    fetch('http://localhost:3001/UsersT/' + user + '/1', { method: 'POST', })
       .then(response => {
         return response.text();
       })
@@ -266,7 +266,7 @@ const reduce = (state, action) => {
         ...state
       };
     }
-    
+
     case "OFFER_CODE": {
       if (offerCode.code === action.payload) {
         state.isEnterOfferCode = true;
@@ -309,8 +309,11 @@ export default function ContextProvider({ children }) {
             imag = item.Image;
           }
           return ({
+            // id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode,
+            // count: 1, isInterest: false, category: 'سبزیجات', RamAve: item.RamAve,
+            // RamCur: item.RamCur, ShufAve: item.ShufAve, ShufCur: item.ShufCur
             id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode,
-            count: 1, isInterest: false, category: 'سبزیجات', RamAve: item.RamAve,
+            count: 1, category: 'سبزیجات', RamAve: item.RamAve,
             RamCur: item.RamCur, ShufAve: item.ShufAve, ShufCur: item.ShufCur
           })
         });

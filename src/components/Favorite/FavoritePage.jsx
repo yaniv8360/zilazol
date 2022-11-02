@@ -13,9 +13,10 @@ export default function FavoritePage(props) {
   console.log(state.net);
   console.log(state.allItems);
   // console.log(state.favorites);
-  console.log(state.user);
+  // console.log(state.user);
   console.log(props.user);
   state.user = props.user;
+  getFavoritsFromDB(state.user);
   useEffect(() => {
     // setTimeout(() => {
     //   dispath({ type: "GET_USER_FAVORITES" });
@@ -67,7 +68,7 @@ export default function FavoritePage(props) {
                 // const fullProduct = state.allAllProducts.
                 // const fullProduct = state.allProducts.find((prod) => prod.id === product);
 
-                <FavoriteCard key={product} {...state.allItems.find((prod) => prod.id === product)} />
+                <FavoriteCard key={product} {...state.allItems.find((prod) => prod.id === product)} user = {state.user} />
               ))}
             </div>
           </>

@@ -4,15 +4,22 @@ import Interest from "./Interest";
 import { Link } from "react-router-dom";
 import { ProductContext, ProductDispath } from "../../Context/ContextProvider";
 import Buttons from "../../Buttons/Buttons";
-import { FilterContext } from "../../Context/ContextFilter";
+import { FilterContext, FilterDispath } from "../../Context/ContextFilter";
 
 export default function Card(props) {
-  const { dispath } = useContext(ProductDispath);
-  const { state } = useContext(ProductContext);
+  // const { dispath } = useContext(ProductDispath);
+  const { dispath } = useContext(FilterDispath);
+  // const { state } = useContext(ProductContext);
+  const { state } = useContext(FilterContext);
   // const { state1 } = useContext(FilterContext);
+  console.log(props.isInterest);
+  if (props.isInterest) {
+    console.log(props.isInterest);
+  }
 
-  const datas = state.allProducts.find((product) => product.id === props.id);
-  const checkBasket = state.basket.some((product) => product.id === props.id);
+  const datas = state.allItems.find((product) => product.id === props.id);
+  // const checkBasket = state.basket.some((product) => product.id === props.id);
+  // console.log(state.favorites);
 
   return (
     <div key={props.id} className="box">
@@ -47,7 +54,7 @@ export default function Card(props) {
           </div>
         </div>
       </Link>
-      {checkBasket ? (
+      {/* {checkBasket ? (
         <Buttons {...datas} />
       ) : (
         <button
@@ -57,8 +64,8 @@ export default function Card(props) {
           خرید
           <FiShoppingCart className="buy_icon" />
         </button>
-      )}
-      <Interest interest={props.isInterest} id={props.id} />
+      )} */}
+      <Interest isInterest={props.isInterest} id={props.id} />
       <div className="discount"><span>הנחה&nbsp;{
         props.net === "שופרסל" ?
           (props.ShufCur != null && props.ShufAve != null ?

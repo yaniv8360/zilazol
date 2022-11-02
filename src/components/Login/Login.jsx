@@ -16,8 +16,8 @@ export default function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
-  const userExists = (item) => item.userName == username && item.password == password;
-  const userNameExists = (item) => item.userName == username;
+  const userExists = (item) => item.userName === username && item.password === password;
+  const userNameExists = (item) => item.userName === username;
   // const fn1 = props.fn;
   useEffect(() => {
     getUsers();
