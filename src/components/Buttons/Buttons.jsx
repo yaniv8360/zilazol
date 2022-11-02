@@ -1,14 +1,18 @@
 import React, { useContext } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { FilterContext, FilterDispath } from "../Context/ContextFilter";
 import { ProductContext, ProductDispath } from "../Context/ContextProvider";
 import "./Buttons.css";
 
 export default function Buttons(props) {
-  const { dispath } = useContext(ProductDispath);
-  const { state } = useContext(ProductContext);
+  const { dispath } = useContext(FilterDispath);
+  const { state } = useContext(FilterContext);
   const { id } = props;
   const countItem = state.basket.find((product) => product.id === id);
+  // console.log(props);
+  // console.log(props.count);
+  // console.log(countItem);
   return (
     <div className="basket_buttons">
       <span
@@ -17,7 +21,8 @@ export default function Buttons(props) {
       >
         <AiOutlinePlus />
       </span>
-      <span className="counter_number">{props.count}</span>
+      {/* <span className="counter_number">{props.count}</span> */}
+      <span className="counter_number">{countItem.count}</span>
       {countItem.count === 1 ? (
         <span
           onClick={() => dispath({ type: "REMOVE_FROM_BASKET", payload: id })}

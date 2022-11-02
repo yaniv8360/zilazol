@@ -69,12 +69,12 @@ function Header() {
         </div> */}
         <div className="search_header">{pathname === "/" && <SearchBar />}</div>
         <div className="icon_Sopping_box">
-          {/* <Link to={"/basket"} className="shoppe_icon_box">
+          <Link to={"/basket"} className="shoppe_icon_box">
             <AiOutlineShopping className="shop_icon" />
             {state.basket.length > 0 && (
               <span className="badge_shope">{state.basket.length}</span>
             )}
-          </Link> */}
+          </Link>
           <Link
             to={"/favorite"}
             className={`mark_icon_box ${state.favorites.length > 0 ? "tada" : ""}`}

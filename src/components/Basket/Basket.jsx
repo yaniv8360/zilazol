@@ -7,10 +7,12 @@ import BasketItem from "./BasketItem";
 import Offer from "./Offer";
 import OfferBadge from "./OfferBadge";
 import SendProducts from "./SendProducts";
+import { FilterContext, FilterDispath } from "../Context/ContextFilter";
+
 
 export default function Basket() {
-  const { state } = useContext(ProductContext);
-  const { dispath } = useContext(ProductDispath);
+  const { state } = useContext(FilterContext);
+  const { dispath } = useContext(FilterDispath);
   return (
     <>
       <div className="favorite_container_linkBar">
@@ -46,7 +48,7 @@ export default function Basket() {
               <span>|</span>
               <span>{state.totalPrice.toLocaleString()} تومان</span>
             </div>
-            {state.totalPriceAfterOffer > 0 && (
+            {/* {state.totalPriceAfterOffer > 0 && (
               <div className="basket_offer">
                 <span>قیمت با تخفیف</span>
                 <span>{state.totalPriceAfterOffer.toLocaleString()} تومان</span>
@@ -57,7 +59,7 @@ export default function Basket() {
             <div className="basket_send">
               <span>مجموع مبلغ قابل پرداخت</span>
               <span>{state.totalPriceFainal.toLocaleString()} تومان</span>
-            </div>
+            </div> */}
             <button className="basket_button_buy">ادامه فرایند خرید</button>
             <button
               onClick={() => dispath({ type: "EMPTY_BASKET" })}

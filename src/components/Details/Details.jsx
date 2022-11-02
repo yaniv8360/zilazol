@@ -4,13 +4,14 @@ import { ProductContext, ProductDispath } from "../Context/ContextProvider";
 import { HiArrowRight } from "react-icons/hi";
 import "./Details.css";
 import Buttons from "../Buttons/Buttons";
+import { FilterContext, FilterDispath } from "../Context/ContextFilter";
 
 export default function Details() {
   const navigate = useNavigate();
-  const { state } = useContext(ProductContext);
-  const { dispath } = useContext(ProductDispath);
+  const { state } = useContext(FilterContext);
+  const { dispath } = useContext(FilterDispath);
   const params = useParams();
-  const datas = state.allProducts.find((product) => product.id == params.id);
+  const datas = state.allItems.find((product) => product.id == params.id);
   const checkBasket = state.basket.some((product) => product.id == params.id);
 
   return (
@@ -27,18 +28,25 @@ export default function Details() {
           <img src="images/kg.png" alt="" className="kg_image" />
         </div>
         <div className="main_content_box">
-          <span className="card_category">{datas.category}</span>
+          {/* <span className="card_category">{datas.category}</span> */}
           <div className="card_content">
             <span className="card_title">{datas.title}</span>
             <span style={{ color: "#8fc700" }}>|</span>
-            <span className="card_price">
-              {datas.price.toLocaleString()} تومان
-            </span>
+            {/* {datas.RamCur != null && (
+              <div className="card_price">
+                {datas.RamCur.toLocaleString()} מחיר רמי לוי
+              </div>)}
+            {datas.ShufCur != null && (
+              <div className="card_price">
+                {datas.ShufCur.toLocaleString()} מחיר שופרסל
+              </div>)} */}
           </div>
           <div className="card_information">
             <ul>
-              <li>ارگانیک : بله</li>
-              <li>وزن بسته بندی : یک کیلوگرم</li>
+              {datas.RamCur != null && (<li>{datas.RamCur.toLocaleString()}
+              &nbsp;מחיר רמי לוי </li>)}
+              {datas.ShufCur != null && (<li>{datas.ShufCur.toLocaleString()} 
+              &nbsp;מחיר שופרסל </li>)}
             </ul>
           </div>
           {checkBasket && <Buttons {...datas} />}
@@ -48,7 +56,7 @@ export default function Details() {
             }
             className="card_buy"
           >
-            افزودن به سبد
+            הוסף לסל
           </button>
         </div>
       </div>

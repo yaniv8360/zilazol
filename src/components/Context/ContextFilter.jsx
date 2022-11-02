@@ -33,6 +33,8 @@ const initialFilterState = {
   userName: "",
   favorites: [],
   users: [],
+  basket: [],
+  totalPrice: 0
 };
 const isRamy = (item) => item.RamCur != null;
 const isshuf = (item) => item.ShufCur != null;
@@ -100,7 +102,7 @@ const filterReduce = (state, action) => {
         alert(data);
       });
   }
-  
+
   function getFavoritsFromDB(user) {
     fetch('http://localhost:3001/FavoritsT/' + user)
       .then(response => {
@@ -116,6 +118,26 @@ const filterReduce = (state, action) => {
         console.log(state.favorites);
       });
   }
+  const sumPrice = (items) => {
+    const totalPrice = items.reduce((totalPrice, product) => {
+      return totalPrice + product.price * product.count;
+    }, 0);
+
+    // if (isOffer) {
+    //   const offerPrice = (totalPrice * offerCode.disCount) / 100;
+    //   const totalPriceAfterOffer = totalPrice - offerPrice;
+
+    //   return {
+    //     totalPrice,
+    //     offerPrice,
+    //     totalPriceAfterOffer,
+    //     ...sumPriceWithSend(totalPrice, offerPrice)
+    //   };
+    // } else {
+    // return { totalPrice, ...sumPriceWithSend(totalPrice) };
+    return totalPrice;
+    // }
+  };
   switch (action.type) {
     case "SEARCH_KEYWORD":
       state.searchKey = action.payload;
@@ -213,19 +235,87 @@ const filterReduce = (state, action) => {
         (item => item == action.payload).length > 0) {
         removeFavorite(action.payload, state.user);
         state.favorites = state.favorites.filter
-        (item => item != action.payload);
+          (item => item != action.payload);
       }
       return {
         ...state
       };
     }
     case "REMOVE_ALL_FAVORITE": {
-      if (state.user != "" && state.favorites.length>0) {
+      if (state.user != "" && state.favorites.length > 0) {
         removeAllFavorites(state.user);
         state.favorites = [];
       }
       return {
         ...state
+      };
+    }
+    case "ADD_TO_BASKET": {
+      const hasProduct = state.basket.some(
+        (product) => product.id === action.payload
+      );
+      if (!hasProduct) {
+        const mainItem = state.allItems.find(
+          (product) => product.id === action.payload
+        );
+        state.basket.push(mainItem);
+      }
+      state.totalPrice = sumPrice(state.basket);
+
+      return {
+        ...state
+        // ...sumPrice(state.basket, state.isEnterOfferCode)
+      };
+    }
+    case "INCREASE": {
+      const indexPlus = state.basket.findIndex(
+        (product) => product.id === action.payload
+      );
+      state.basket[indexPlus].count++;
+      state.totalPrice = sumPrice(state.basket);
+
+      return {
+        ...state
+        // ...sumPrice(state.basket, state.isEnterOfferCode)
+      };
+    }
+    case "DECREASE": {
+      const indexMinus = state.basket.findIndex(
+        (product) => product.id === action.payload
+      );
+      if (state.basket[indexMinus].count > 1) {
+        state.basket[indexMinus].count--;
+      }
+      state.totalPrice = sumPrice(state.basket);
+
+      return {
+        ...state
+        // ...sumPrice(state.basket, state.isEnterOfferCode)
+      };
+    }
+    case "EMPTY_BASKET": {
+      state.basket = state.basket.forEach((product) => (product.count = 1));
+      state.basket = [];
+      state.totalPrice = 0;
+
+      return {
+        ...state
+        // ...sumPrice(state.basket, state.isEnterOfferCode)
+      };
+    }
+    case "REMOVE_FROM_BASKET": {
+      const indexDelete = state.basket.findIndex(
+        (product) => product.id === action.payload
+      );
+      state.basket[indexDelete].count = 1;
+      state.basket = state.basket.filter(
+        (product) => product.id !== action.payload
+      );
+      state.totalPrice = sumPrice(state.basket);
+
+      return {
+        ...state
+        // ...sumPrice(state.basket, state.isEnterOfferCode)
       };
     }
     default:
@@ -320,6 +410,7 @@ export default function ContextFilter({ children }) {
       dispath({ type: "ALL" });
     }, 100);
   }
+
   // console.log(initialFilterState)
   // console.log(merchants);
   console.log(state);

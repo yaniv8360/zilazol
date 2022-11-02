@@ -18,7 +18,7 @@ export default function Card(props) {
   }
 
   const datas = state.allItems.find((product) => product.id === props.id);
-  // const checkBasket = state.basket.some((product) => product.id === props.id);
+  const checkBasket = state.basket.some((product) => product.id === props.id);
   // console.log(state.favorites);
 
   return (
@@ -54,17 +54,17 @@ export default function Card(props) {
           </div>
         </div>
       </Link>
-      {/* {checkBasket ? (
+      {checkBasket ? (
         <Buttons {...datas} />
       ) : (
         <button
           onClick={() => dispath({ type: "ADD_TO_BASKET", payload: props.id })}
           className="products_button buy_button"
         >
-          خرید
+          קנה
           <FiShoppingCart className="buy_icon" />
         </button>
-      )} */}
+      )}
       <Interest isInterest={props.isInterest} id={props.id} />
       <div className="discount"><span>הנחה&nbsp;{
         props.net === "שופרסל" ?
