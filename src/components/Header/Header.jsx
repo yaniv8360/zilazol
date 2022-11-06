@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import "./Header.css";
 import { AiOutlineShopping } from "react-icons/ai";
 import { BsFillBookmarkHeartFill } from "react-icons/bs";
+import { BiHomeHeart } from "react-icons/bi";
 import { ProductContext, ProductDispath } from "../Context/ContextProvider";
 import { Link, useLocation } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
@@ -83,6 +84,15 @@ function Header() {
             {state.favorites.length > 0 && (
               <span className="badge_mark">{state.favorites.length}</span>
             )}
+          </Link>
+          <Link
+            to={"/special"}
+            // className={`mark_icon_box ${state.specials.length > 0 ? "tada" : ""}`}
+          >
+            <BiHomeHeart className="mark_icon" />
+            {/* {state.favorites.length > 0 && (
+              <span className="badge_mark">{state.favorites.length}</span> */}
+            {/* )} */}
           </Link>
         </div>
       </nav>

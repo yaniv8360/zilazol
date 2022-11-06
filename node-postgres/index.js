@@ -20,8 +20,8 @@ app.get('/:table/:user', (req, res) => {
     })
 })
 
-app.post('/:table/:user/:prod', (req, res) => {
-  merchant_model.updateDB(req.params.table, req.params.user, req.params.prod)
+app.post('/:table/:user/:prod/:count', (req, res) => {
+  merchant_model.updateDB(req.params.table, req.params.user, req.params.prod, req.params.count)
   .then(response => {
     res.status(200).send(response);
   })

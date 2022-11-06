@@ -5,6 +5,7 @@ import ContextFilter from './components/Context/ContextFilter';
 import ContextProvider from './components/Context/ContextProvider';
 import Details from './components/Details/Details';
 import FavoritePage from './components/Favorite/FavoritePage';
+import SpecialPage from './components/special/SpecialPage';
 import Header from './components/Header/Header';
 import Products from './components/Products/Products';
 import React, { useState, useEffect } from 'react';
@@ -19,20 +20,21 @@ function App() {
     // productsList.map((product) => <Card net = {state.net} key={product.id} {...product} />)
 
     { path: '/', element: <Products user={user} /> },
-    { path: '/:id', element: <Details /> },
+    { path: '/:id', element: <Details user={user} /> },
     { path: '/favorite', element: <FavoritePage user={user} /> },
+    { path: '/special', element: <SpecialPage user={user} /> },
     { path: '/basket', element: <Basket /> },
     { path: '/login', element: <Login user={user} fn={(usr) => setUser(usr)} /> },
     { path: '*', element: <Navigate to={'/'} /> },
   ])
   return (
-    <ContextProvider>
+    // <ContextProvider>
       <ContextFilter>
         <Header />
         {router}
         {/* {App6()} */}
       </ContextFilter>
-    </ContextProvider>
+    // </ContextProvider>
   );
 }
 function App1() {

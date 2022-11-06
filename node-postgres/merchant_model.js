@@ -41,8 +41,20 @@ const getMerchants = (table, user) => {
       })
     })
   }
+  if (table == "usersViewsT") {
+    console.log("came45");
+    return new Promise(function (resolve, reject) {
+      // SELECT * FROM public."usersViewsT" ORDER BY "productID" ASC, "userName" ASC 
+      pool.query('SELECT "usersViewsT"."productID","usersViewsT"."count"  FROM public."usersViewsT" WHERE "userName" = $1;', [user], (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        resolve(results.rows);
+      })
+    })
+  }
 }
-const updateDB = (table, user, prod) => {
+const updateDB = (table, user, prod, count) => {
   console.log(user);
   if (table == "UsersT") {
     const userName = user.split(":")[0];
@@ -60,6 +72,30 @@ const updateDB = (table, user, prod) => {
     return new Promise(function (resolve, reject) {
       // pool.query('INSERT INTO public."UsersT" VALUES ($1, $2);', [userName, password], (error, results) => {
       pool.query('INSERT INTO public."FavoritsT" VALUES ($1, $2);', [prod, user], (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        resolve('favorite for current user is added to the favorites DB table');
+      })
+    })
+  }
+  if (table == "usersViewsT") {
+    console.log("came85");
+    return new Promise(function (resolve, reject) {
+      // INSERT INTO public."usersViewsT" VALUES ('11210000094', 'Alice', '1');
+      // pool.query('INSERT INTO public."usersViewsT" VALUES ($1, $2, "1.0");', [prod, user], (error, results) => {
+      pool.query('INSERT INTO public."usersViewsT" ("productID", "userName", "count") VALUES ($1, $2, $3);', [prod, user, count], (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        resolve('special for current user is added to the favorites DB table');
+      })
+    })
+  }
+  if (table == "usersViewsTUpdate") {
+    return new Promise(function (resolve, reject) {
+      // UPDATE public."usersViewsT" SET "count" = '5' WHERE "usersViewsT"."productID" = '11210000094' AND "usersViewsT"."userName" = 'Alice';
+      pool.query('UPDATE public."usersViewsT" SET "count" = $1 WHERE "usersViewsT"."productID" = $2 AND "usersViewsT"."userName" = $3;', [count, prod, user], (error, results) => {
         if (error) {
           reject(error)
         }

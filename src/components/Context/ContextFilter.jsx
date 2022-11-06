@@ -68,7 +68,26 @@ const filterItemsHandler = (key) => {
 
 const filterReduce = (state, action) => {
   function addUser(user) {
-    fetch('http://localhost:3001/UsersT/' + user + '/1', { method: 'POST', })
+    fetch('http://localhost:3001/UsersT/' + user + '/1/1', { method: 'POST', })
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        alert(data);
+      });
+  }
+  function updateSpecial(prod, user, count) {
+    console.log("came80CF");
+    fetch('http://localhost:3001/usersViewsTUpdate/' + user + '/' + prod + '/' + count, { method: 'POST', })
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        alert(data);
+      });
+  }
+  function addSpecial(prod, user) {
+    fetch('http://localhost:3001/usersViewsT/' + user + '/' + prod + '/1', { method: 'POST', })
       .then(response => {
         return response.text();
       })
@@ -77,7 +96,7 @@ const filterReduce = (state, action) => {
       });
   }
   function addFavorite(prod, user) {
-    fetch('http://localhost:3001/FavoritsT/' + user + '/' + prod, { method: 'POST', })
+    fetch('http://localhost:3001/FavoritsT/' + user + '/' + prod + '/1', { method: 'POST', })
       .then(response => {
         return response.text();
       })
@@ -120,6 +139,7 @@ const filterReduce = (state, action) => {
       });
   }
   function getSpecialsFromDB(user) {
+    console.log("came141");
     fetch('http://localhost:3001/usersViewsT/' + user)
       .then(response => {
         return response.json();
@@ -131,6 +151,7 @@ const filterReduce = (state, action) => {
         state.specials = records;
         console.log(state.specials);
       });
+      console.log("came153");
   }
   const sumPrice = (items) => {
     const totalPrice = items.reduce((totalPrice, product) => {
@@ -247,6 +268,34 @@ const filterReduce = (state, action) => {
       getFavoritsFromDB(state.userName);
       console.log(state.userName);
       console.log(state.favorites);
+      return {
+        ...state
+      };
+    }
+    case "ADD_SPECIAL": {
+      if (state.user != null) {
+        if (state.specials.filter(item => item.id == action.payload).length == 0) {
+          addSpecial(action.payload, state.user);
+          //           return ({ "id": item.productID, "count": item.count })
+          state.specials = [{ "id": action.payload, "count": 1 }, ...state.specials];
+        } else {
+          // setState(myState.map(item => item.id === id ? {...item, item.description: "new desc"} : item))
+          // myState.map(item => item.id === id ? {...item, item.description: "new desc"} : item))
+          const elm = state.specials.find(item => item.id = action.payload);
+          console.log("came285CF");
+          // updateSpecial(action.payload, state.user, elm.count + 1);
+          updateSpecial(action.payload, state.user, 5);
+
+          // state.specials = state.specials.map(item => item.id === action.payload ? {
+            // ...item, "count": item.count + 1
+          // } : item);
+          console.log(state.specials);
+          // [{ "id": action.payload, "count": 1 }, ...state.specials];
+
+
+
+        }
+      }
       return {
         ...state
       };

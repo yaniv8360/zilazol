@@ -37,8 +37,10 @@ export default function Products(props) {
   useEffect(() => {
     // if (didMount.current == false) {
     getMerchant();
-    if (props.user != "")
+    if (props.user != "") {
       getFavoritsFromDB(props.user);
+      getSpecialsFromDB(props.user);
+    }
     // }
   }, [state]);
   function getMerchant() {
@@ -98,6 +100,21 @@ export default function Products(props) {
         console.log(state.favorites);
       });
   }
+  function getSpecialsFromDB(user) {
+    console.log("came141");
+    fetch('http://localhost:3001/usersViewsT/' + user)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        const records = data.map((item) => {
+          return ({ "id": item.productID, "count": item.count })
+        });
+        state.specials = records;
+        console.log(state.specials);
+      });
+    console.log("came153");
+  }
   console.log(state.favorites);
   return (
     <>
@@ -112,7 +129,7 @@ export default function Products(props) {
           productsList.map((product) =>
             <Card net={state.net}
               // isInterest={state.favorites.filter(item => item === '16000281684').length > 0}
-              key={product.id} {...product} 
+              key={product.id} {...product}
               isInterest={state.favorites.filter(item => item === product.id).length > 0} />)
         ) : (
           <div className="not_products">
