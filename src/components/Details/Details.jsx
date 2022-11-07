@@ -18,11 +18,47 @@ export default function Details(props) {
   console.log(params.id);
   state.user = props.user;
   console.log(state.user);
-  // getSpecialsFromDB(state.user);
+  console.log(state.specials);
   if (state.user != "") {
-    console.log("came23DT");
+    if (state.specials.length == 0) {
+      // setTimeout(() => {
+      // dispath({ type: "ALL" });
+      // console.log(state.specials);
+      getSpecialsFromDB(state.user);
+      // console.log(state.specials);
+      // }, 100);
+      console.log(state.specials);
+    }
+
     handleSpecials(state.user, params.id);
+    // getSpecialsFromDB(state.user);
   }
+  // getSpecialsFromDB(state.user);
+  // if (state.user != "") {
+  //   console.log("came23DT");
+  // }
+  // useEffect(() => {
+  //   // setTimeout(() => {
+  //   //   dispath({ type: "GET_USER_FAVORITES" });
+  //   // }, 100);
+  //   // getUsers();
+  //   // dispath({ type: "GET_USER_FAVORITES" });
+  //   if (state.user != "") {
+  //     setTimeout(() => {
+  //       // dispath({ type: "ALL" });
+  //       console.log(state.specials);  
+  //       getSpecialsFromDB(state.user);
+  //     }, 100);
+  //     setTimeout(() => {
+  //       // dispath({ type: "ALL" });
+  //       handleSpecials(state.user, params.id);
+  //     }, 100);
+  //   }
+
+
+
+  // }, [state.specials, state.user]);
+  // }, [state.user]);
   // dispath({ type: "ADD_SPECIAL", payload: datas.id });
   // useEffect(() => {
   // setTimeout(() => {
@@ -35,24 +71,30 @@ export default function Details(props) {
   // }, [state.specials, state.user]);
   // }, []);
   function handleSpecials(user, prod) {
-    console.log("came38DT");
-    getSpecialsFromDB(user);
+    // console.log("came38DT");
+    // console.log(state.specials);
+    // getSpecialsFromDB(user);
+    console.log(state.specials);
     if (state.specials.filter(item => item.id == prod).length == 0) {
-      console.log("came40DT");
+      // console.log("came40DT");
       addSpecial(prod, state.user);
-      console.log("came42DT");
+      // console.log("came42DT");
       //           return ({ "id": item.productID, "count": item.count })
+      console.log(state.specials);
       state.specials = [{ "id": prod, "count": 1 }, ...state.specials];
+      console.log(state.specials);
     } else {
       // setState(myState.map(item => item.id === id ? {...item, item.description: "new desc"} : item))
       // myState.map(item => item.id === id ? {...item, item.description: "new desc"} : item))
       const elm = state.specials.find(item => item.id = prod);
-      console.log("came285CF");
-      updateSpecial(prod, state.user, elm.count + 1);
+      // console.log("came285CF");
+      console.log(state.specials);
+
+      updateSpecial(prod, state.user, parseInt(elm.count) + 1);
       // updateSpecial(action.payload, state.user, 5);
 
       state.specials = state.specials.map(item => item.id === prod ? {
-        ...item, "count": item.count + 1
+        ...item, "count": parseInt(item.count) + 1
       } : item);
       console.log(state.specials);
       // [{ "id": action.payload, "count": 1 }, ...state.specials];
@@ -100,6 +142,9 @@ export default function Details(props) {
         console.log(state.specials);
       });
     console.log("came 97DT");
+    // setTimeout(() => {
+    //   dispath({ type: "DELAY" });
+    // }, 10);
   }
 
 

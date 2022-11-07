@@ -38,6 +38,15 @@ app.delete('/:table/:user/:prod', (req, res) => {
     res.status(500).send(error);
   })
 })
+// app.options('/:table', (req, res) => {
+//   merchant_model.lockDBT(req.params.table)
+//   .then(response => {
+//     res.status(200).send(response);
+//   })
+//   .catch(error => {
+//     res.status(500).send(error);
+//   })
+// })
 
 // app.delete('/merchants/:id', (req, res) => {
 //   merchant_model.deleteMerchant(req.params.id)

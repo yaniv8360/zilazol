@@ -34,15 +34,30 @@ export default function Products(props) {
   // const didMount = useRef(false);
   // state.init = "b";
   // getMerchant();
+  console.log(state.specials);
+  if (props.user != "" && state.specials.length == 0)
+  {
+    lockSpecialDBT();
+    getSpecialsFromDB(props.user);
+
+  }
+
+  // setTimeout(() => {
+  //   }, 100);
   useEffect(() => {
     // if (didMount.current == false) {
     getMerchant();
     if (props.user != "") {
       getFavoritsFromDB(props.user);
-      getSpecialsFromDB(props.user);
+      console.log(state.specials);
+      if (state.specials.length == 0)
+        getSpecialsFromDB(props.user);
+
+      // setTimeout(() => {
+      // }, 100);
     }
     // }
-  }, [state]);
+  }, [state.filteredItems]);
   function getMerchant() {
     fetch('http://localhost:3001/Products/1')
       .then(response => {
@@ -110,10 +125,35 @@ export default function Products(props) {
         const records = data.map((item) => {
           return ({ "id": item.productID, "count": item.count })
         });
+        console.log(state.specials);
         state.specials = records;
         console.log(state.specials);
       });
     console.log("came153");
+    // setTimeout(() => {
+    //   // console.log(state.specials);
+    //   console.log(state.specials);
+    // }, 100);
+  }
+  function lockSpecialDBT() {
+    console.log("came141");
+    fetch('http://localhost:3001/usersViewsTLock/1/1', { method: 'POST', });
+    //   .then(response => {
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     const records = data.map((item) => {
+    //       return ({ "id": item.productID, "count": item.count })
+    //     });
+    //     console.log(state.specials);
+    //     state.specials = records;
+    //     console.log(state.specials);
+    //   });
+    // console.log("came153");
+    // setTimeout(() => {
+    //   // console.log(state.specials);
+    //   console.log(state.specials);
+    // }, 100);
   }
   console.log(state.favorites);
   return (
