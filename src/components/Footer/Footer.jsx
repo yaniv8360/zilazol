@@ -16,38 +16,37 @@ export default function Footer() {
         <img src="images/memory.png" alt="Memory Game" />
         <div className="footer_btn_title_box">
           <p>
-            بازی کارت حافظه که با Vanilla js نوشته شده را نیز میتوانید از این
-            لینک تجربه کنید.
+            שמחים שבחרת במערכת זיל הזול, מקווים שהמידע שלנו יהיה לך לעזר במטרה לחסוך ולהקל על יוקר המחיה!
           </p>
           <a
             target={"_blank"}
-            href="https://mohammadyousefvand.github.io/Memory-Card-Game/"
+            href="https://www.shufersal.co.il/online/he/A"
             className="btn_link_to_game"
             rel="noreferrer"
           >
-            بزن بریم
+           שופרסל אונליין
           </a>
           <a
             target={"_blank"}
-            href="https://github.com/mohammadyousefvand/Memory-Card-Game"
+            href="https://www.rami-levy.co.il/he/online/market"
             className="btn_link_to_game"
             rel="noreferrer"
           >
-            سورس کد
+            רמי לוי אונליין
           </a>
         </div>
       </div>
       <div className="footer_last">
-        <span>دسترسی سریع</span>
+        <span>גישה מהירה</span>
         <div className="footer_link_box">
-          <Link to={"/basket"}>سبد خرید</Link>
-          <Link to={"/favorite"}>علاقه مندی ها</Link>
+          <Link to={"/basket"}>סל הקניות</Link>
+          <Link to={"/favorite"}>רשימת המועדפים</Link>
           <a
             target={"_blank"}
-            href="https://github.com/mohammadyousefvand/Shoping-card-react"
+            href="https://github.com/yaniv8360/zilazol"
             rel="noreferrer"
           >
-            دیدن سورس کد پروژه در گیت هاب
+          קוד המקור של הפרויקט
           </a>
         </div>
       </div>

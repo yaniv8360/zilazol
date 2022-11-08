@@ -44,7 +44,7 @@ export default function Basket() {
           <div className="basket_priceBox">
             {/* <OfferBadge /> */}
             <div className="basket_price">
-              <span>جمع سبد خرید</span>
+              <span>מחיר הסל הכולל:</span>
               <span>|</span>
               <span>{state.totalPrice.toLocaleString()} ש"ח</span>
             </div>
@@ -69,7 +69,7 @@ export default function Basket() {
               onClick={() => dispath({ type: "EMPTY_BASKET" })}
               className="basket_button_remove"
             >
-              حذف {state.basket.length} کالا از سبد خرید
+              מחק {state.basket.length} פריטים מסל הקניות
             </button>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function Basket() {
             src="images/empty-cart.png"
             alt=""
           />
-          <span className="favorite_empty_title">سبد خرید خالی است</span>
+          <span className="favorite_empty_title">סל הקניות ריק כעת</span>
         </div>
       )}
     </>
