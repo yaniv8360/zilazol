@@ -99,20 +99,11 @@ const updateDB = (table, user, prod, count) => {
         if (error) {
           reject(error)
         }
-        resolve('the current special was updater for current user is added to the favorites DB table');
+        resolve('favorite for current user is added to the favorites DB table');
       })
     })
   }
-  if (table == "usersViewsTLock") {
-    return new Promise(function (resolve, reject) {
-      pool.query('LOCK TABLE public."usersViewsT";', (error, results) => {
-        if (error) {
-          reject(error)
-        }
-        // resolve('המוצר המועדף נמחק מרשימת המועדפים שלך');
-      })
-    })
-  }
+
 }
 const deleteFromDB = (table, user, prod) => {
   console.log(user);
@@ -137,19 +128,6 @@ const deleteFromDB = (table, user, prod) => {
     })
   }
 }
-// const lockDBT = (table) => {
-//   console.log(user);
-//   if (table == "usersViewsT") {
-// return new Promise(function (resolve, reject) {
-//   pool.query('LOCK TABLE public."usersViewsT";', (error, results) => {
-//     if (error) {
-//       reject(error)
-//     }
-//     // resolve('המוצר המועדף נמחק מרשימת המועדפים שלך');
-//   })
-// })
-//   }
-// }
 // const addFavoriteToDB = (prod, user) => {
 //   console.log(user);
 //   const userName = user.split(":")[0];

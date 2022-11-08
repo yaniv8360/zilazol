@@ -138,21 +138,21 @@ const filterReduce = (state, action) => {
         console.log(state.favorites);
       });
   }
-  // function getSpecialsFromDB(user) {
-  //   console.log("came141");
-  //   fetch('http://localhost:3001/usersViewsT/' + user)
-  //     .then(response => {
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       const records = data.map((item) => {
-  //         return ({ "id": item.productID, "count": item.count })
-  //       });
-  //       state.specials = records;
-  //       console.log(state.specials);
-  //     });
-  //     console.log("came153");
-  // }
+  function getSpecialsFromDB(user) {
+    console.log("came141");
+    fetch('http://localhost:3001/usersViewsT/' + user)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        const records = data.map((item) => {
+          return ({ "id": item.productID, "count": item.count })
+        });
+        state.specials = records;
+        console.log(state.specials);
+      });
+      console.log("came153");
+  }
   const sumPrice = (items) => {
     const totalPrice = items.reduce((totalPrice, product) => {
       if (state.net === "שופרסל")
@@ -254,58 +254,52 @@ const filterReduce = (state, action) => {
         ...state
       };
     }
-    case "DELAY": {
-
+    case "GET_USER_SPECIALS": {
+      getSpecialsFromDB(state.userName);
+      // console.log(state.userName);
+      // console.log(state.specials);
       return {
         ...state
       };
     }
-    // case "GET_USER_SPECIALS": {
-    //   getSpecialsFromDB(state.userName);
-    //   // console.log(state.userName);
-    //   // console.log(state.specials);
-    //   return {
-    //     ...state
-    //   };
-    // }
-    // case "GET_USER_FAVORITES": {
-    //   // state.userName = action.payload;
-    //   // console.log(state.userName);
-    //   getFavoritsFromDB(state.userName);
-    //   console.log(state.userName);
-    //   console.log(state.favorites);
-    //   return {
-    //     ...state
-    //   };
-    // }
-    // case "ADD_SPECIAL": {
-    //   if (state.user != null) {
-    //     if (state.specials.filter(item => item.id == action.payload).length == 0) {
-    //       addSpecial(action.payload, state.user);
-    //       //           return ({ "id": item.productID, "count": item.count })
-    //       state.specials = [{ "id": action.payload, "count": 1 }, ...state.specials];
-    //     } else {
-    //       // setState(myState.map(item => item.id === id ? {...item, item.description: "new desc"} : item))
-    //       // myState.map(item => item.id === id ? {...item, item.description: "new desc"} : item))
-    //       const elm = state.specials.find(item => item.id = action.payload);
-    //       console.log("came285CF");
-    //       // updateSpecial(action.payload, state.user, elm.count + 1);
-    //       updateSpecial(action.payload, state.user, 5);
+    case "GET_USER_FAVORITES": {
+      // state.userName = action.payload;
+      // console.log(state.userName);
+      getFavoritsFromDB(state.userName);
+      console.log(state.userName);
+      console.log(state.favorites);
+      return {
+        ...state
+      };
+    }
+    case "ADD_SPECIAL": {
+      if (state.user != null) {
+        if (state.specials.filter(item => item.id == action.payload).length == 0) {
+          addSpecial(action.payload, state.user);
+          //           return ({ "id": item.productID, "count": item.count })
+          state.specials = [{ "id": action.payload, "count": 1 }, ...state.specials];
+        } else {
+          // setState(myState.map(item => item.id === id ? {...item, item.description: "new desc"} : item))
+          // myState.map(item => item.id === id ? {...item, item.description: "new desc"} : item))
+          const elm = state.specials.find(item => item.id = action.payload);
+          console.log("came285CF");
+          // updateSpecial(action.payload, state.user, elm.count + 1);
+          updateSpecial(action.payload, state.user, 5);
 
-    //       // state.specials = state.specials.map(item => item.id === action.payload ? {
-    //         // ...item, "count": item.count + 1
-    //       // } : item);
-    //       console.log(state.specials);
-    //       // [{ "id": action.payload, "count": 1 }, ...state.specials];
+          // state.specials = state.specials.map(item => item.id === action.payload ? {
+            // ...item, "count": item.count + 1
+          // } : item);
+          console.log(state.specials);
+          // [{ "id": action.payload, "count": 1 }, ...state.specials];
 
 
 
-    //     }
-    //   }
-    //   return {
-    //     ...state
-    //   };
-    // }
+        }
+      }
+      return {
+        ...state
+      };
+    }
     case "ADD_FAVORITE": {
       if (state.user != "" && state.favorites.filter
         (item => item == action.payload).length == 0) {
