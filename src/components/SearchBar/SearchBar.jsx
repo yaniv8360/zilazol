@@ -10,7 +10,6 @@ export default function SearchBar() {
 
   const location = useLocation();
   const { pathname } = location;
-  // change The route search input is empty
   useEffect(() => {
     dispath({ type: "SEARCH_KEYWORD", payload: "" });
   }, [pathname]);

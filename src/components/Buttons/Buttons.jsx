@@ -10,9 +10,6 @@ export default function Buttons(props) {
   const { state } = useContext(FilterContext);
   const { id } = props;
   const countItem = state.basket.find((product) => product.id === id);
-  // console.log(props);
-  // console.log(props.count);
-  // console.log(countItem);
   return (
     <div className="basket_buttons">
       <span
@@ -21,7 +18,6 @@ export default function Buttons(props) {
       >
         <AiOutlinePlus />
       </span>
-      {/* <span className="counter_number">{props.count}</span> */}
       <span className="counter_number">{countItem.count}</span>
       {countItem.count === 1 ? (
         <span

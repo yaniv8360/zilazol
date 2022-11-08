@@ -6,20 +6,11 @@ import "./Filter.css";
 export default function Filter() {
   const { dispath } = useContext(FilterDispath);
   const { state } = useContext(FilterContext);
-  // const { state1 } = useContext(ProductContext);
   return (
     <div className="filter_container">
       <div className="filter_btnBox">
       <button
           onClick={() => {
-            // if (state1 != null) {
-            //   console.log("came");
-            //   if (state1.net == "שופרסל") {
-            //     state1.net = "רמי לוי";
-            //   } else {
-            //     state1.net = "שופרסל";
-            //   }
-            // }
             dispath({ type: "CHANGE_NET" })
           }
           }

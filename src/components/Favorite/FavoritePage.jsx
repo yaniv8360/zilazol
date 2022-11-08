@@ -7,22 +7,14 @@ import FavoriteCard from "./FavoriteCard";
 import ContextFilter, { FilterContext, FilterDispath } from "../Context/ContextFilter";
 
 export default function FavoritePage(props) {
-  // const { state } = useContext(ProductContext);
   const { state } = useContext(FilterContext);
   const { dispath } = useContext(FilterDispath);
   console.log(state.net);
   console.log(state.allItems);
-  // console.log(state.favorites);
-  // console.log(state.user);
   console.log(props.user);
   state.user = props.user;
   getFavoritsFromDB(state.user);
   useEffect(() => {
-    // setTimeout(() => {
-    //   dispath({ type: "GET_USER_FAVORITES" });
-    // }, 100);
-    // getUsers();
-    // dispath({ type: "GET_USER_FAVORITES" });
     getFavoritsFromDB(state.user);
 
   }, [state.favorites, state.user]);
@@ -65,9 +57,6 @@ export default function FavoritePage(props) {
             </div>
             <div className="favorite_container">
               {state.favorites.map((product) => (
-                // const fullProduct = state.allAllProducts.
-                // const fullProduct = state.allProducts.find((prod) => prod.id === product);
-
                 <FavoriteCard key={product} {...state.allItems.find((prod) => prod.id === product)} user = {state.user} />
               ))}
             </div>

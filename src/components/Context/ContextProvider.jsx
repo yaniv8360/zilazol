@@ -1,31 +1,6 @@
 import React, { createContext, useReducer, useState, useEffect } from "react";
-// import allProducts from "../../Data";
 import offerCode from "../../Offer";
 import { sendPrice } from "../../Offer";
-// import App32 from "../../Data";
-// import { str42 } from "../../App";
-// console.log("imhere");
-// let str2 = sendPrice;
-// console.log(str42);
-
-// let allProducts = [{
-//   id: 1,
-//   title: "dani_the_king",
-//   image: 'images/1.jpg',
-//   price: 10000,
-//   count: 1,
-//   isInterest: false,
-//   category: 'میوه جات'
-// },
-// {
-//   id: 2,
-//   title: 'پیاز',
-//   image: 'images/2.jpg',
-//   price: 13000,
-//   count: 1,
-//   isInterest: false,
-//   category: 'سبزیجات'
-// }]
 let allProducts = [];
 let allAllProducts = [];
 
@@ -67,7 +42,6 @@ const sumPrice = (items, isOffer) => {
   }
 };
 
-// calc Price With shopping cost
 const sumPriceWithSend = (totalPrice, offerPrice = 0) => {
   let totalPriceFainal = null;
 
@@ -79,7 +53,6 @@ const sumPriceWithSend = (totalPrice, offerPrice = 0) => {
 
   return { totalPriceFainal };
 };
-// fetch(`http://localhost:3001/merchants/${id}`, {
 
 
 const reduce = (state, action) => {
@@ -90,17 +63,6 @@ const reduce = (state, action) => {
       })
       .then(data => {
         alert(data);
-        // .then(response => {
-        //     return response.json();
-        //   })
-        // .then(data => {
-        //   const records = data.map((item) => {
-        //     return ({
-        //       userName: item.userName, password: item.password
-        //     })
-        //   });
-        //   state.users = records;
-        //   console.log(state.users);
       });
   }
   function getFavoritsFromDB(user) {
@@ -118,24 +80,8 @@ const reduce = (state, action) => {
         console.log(state.favorites);
       });
   }
-  // function getFavoritsFromDB(user) {
-  //   fetch('http://localhost:3001/addUsers/' + user, { method: 'POST', })
-  //     .then(response => {
-  //       return response.text();
-  //     })
-  //     .then(data => {
-  //       alert(data);
-  //     });
-  // }
   switch (action.type) {
     case "ADD_FAVORITE": {
-      // state.allProducts.forEach((product) => {
-      //   if (product.id === action.payload) {
-      //     product.isInterest = !product.isInterest;
-      //     state.favorites = allProducts.filter((product) => product.isInterest);
-      //     state.isFavorite = true;
-      //   }
-      // });
       if (state.user != "") {
         state.favorites = [action.payload, ...state.favorites];
 
@@ -228,23 +174,7 @@ const reduce = (state, action) => {
         ...state
       };
     }
-    // case "CHANGE_NET": {
-    //   const isRamy = (item) => item.RamCur != null;
-    //   const isshuf = (item) => item.ShufCur != null;
-    //   // if state.net == 
-    //   if (state.net === "שופרסל") {
-    //     state.net = "רמי לוי";
-    //     state.allProducts = state.allAllProducts.filter(isRamy);
-    //   }
-    //   else {
-    //     state.net = "שופרסל";
-    //     state.allProducts = state.allAllProducts.filter(isshuf);
-    //     // console.log(state.net)
-    //   }
-    //   return {
-    //     ...state
-    //   };
-    // }
+
     case "LOGIN_USER": {
       state.userName = action.payload;
       console.log(state.userName);
@@ -261,7 +191,6 @@ const reduce = (state, action) => {
       state.users = [{ userName: state.userName, password: action.payload.split(":")[1] }, ...state.users]
       console.log(state.users);
       state.favorites = [];
-      // getUsers();
       return {
         ...state
       };
@@ -289,7 +218,7 @@ export const ProductDispath = createContext();
 
 export default function ContextProvider({ children }) {
   const [state, dispath] = useReducer(reduce, initialState);
-  // const [merchants, setMerchants] = useState(false);
+
   useEffect(() => {
     getMerchant();
     getUsers();
@@ -301,23 +230,17 @@ export default function ContextProvider({ children }) {
       })
       .then(data => {
 
-        // const records = data.map((item) => ({ id: item.ItemCode, title: item.ItemName, image: 'https://m.pricez.co.il/ProductPictures/200x/'+item.ItemCode+'.jpg', price: item.ItemCode, count: 1, isInterest: false, category: 'سبزیجات' }));
-        // console.log(records);
         const records = data.map((item) => {
           let imag = 'https://m.pricez.co.il/ProductPictures/200x/' + item.ItemCode + '.jpg';
           if (item.Image != null) {
             imag = item.Image;
           }
           return ({
-            // id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode,
-            // count: 1, isInterest: false, category: 'سبزیجات', RamAve: item.RamAve,
-            // RamCur: item.RamCur, ShufAve: item.ShufAve, ShufCur: item.ShufCur
             id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode,
             count: 1, category: 'سبزیجات', RamAve: item.RamAve,
             RamCur: item.RamCur, ShufAve: item.ShufAve, ShufCur: item.ShufCur
           })
         });
-        // console.log(data[0].ItemName);
         const isRamy = (item) => item.RamCur != null;
         const isshuf = (item) => item.ShufCur != null;
         const srtShuf = function (a, b) {
@@ -336,12 +259,6 @@ export default function ContextProvider({ children }) {
           }
           return 0;
         }
-        // setMerchants(records);
-
-        // initialFilterState.filteredItems = records;
-        // console.log(data[0].ItemName);
-        // setMerchants(data[0].ItemName);
-        // console.log(merchants);
 
         state.allAllProducts = records;
         if (state.net === "שופרסל") {
@@ -354,32 +271,10 @@ export default function ContextProvider({ children }) {
           state.allProducts = state.allProducts.sort(srtRamy);
 
         }
-        // setTimeout(() => {
-        //   dispath({ type: "DELAY" });
-        // }, 100);
-
-        // state.filteredItems = records.filter(isshuf);
-        // console.log(state.allProducts);
-        // console.log(state.filteredItems[0].title);
 
       });
-    // console.log(merchants);
 
   }
-  // console.log(merchants);
-  // state.totalPrice = 8;
-  // console.log(state.totalPrice);
-  // state.allProducts = merchants;
-  // console.log(state.allProducts[0].title);
-  // console.log(state.allProducts);
-  // // state.allProducts = [{id: 3,
-  // //   title: 'abc',
-  // //   image: 'images/3.jpg',
-  // //   price: 15000,
-  // //   count: 1,
-  // //   isInterest: false,
-  // //   category: 'سبزیجات'}];
-  // console.log(state.allProducts);
 
   function getUsers() {
     fetch('http://localhost:3001/Users/1')
@@ -389,60 +284,15 @@ export default function ContextProvider({ children }) {
       .then(data => {
 
         const records = data.map((item) => {
-          // let imag = 'https://m.pricez.co.il/ProductPictures/200x/' + item.ItemCode + '.jpg';
-          // if (item.Image != null) {
-          //   imag = item.Image;
-          // }
           return ({
             userName: item.userName, password: item.password
           })
         });
-        // const isRamy = (item) => item.RamCur != null;
-        // const isshuf = (item) => item.ShufCur != null;
-        // const srtShuf = function (a, b) {
-        //   if (1 - a["ShufCur"] / a["ShufAve"] < 1 - b["ShufCur"] / b["ShufAve"]) {
-        //     return 1;
-        //   } else if (1 - a["ShufCur"] / a["ShufAve"] > 1 - b["ShufCur"] / b["ShufAve"]) {
-        //     return -1;
-        //   }
-        //   return 0;
-        // }
-        // const srtRamy = function (a, b) {
-        //   if (1 - a["RamCur"] / a["RamAve"] < 1 - b["RamCur"] / b["RamAve"]) {
-        //     return 1;
-        //   } else if (1 - a["RamCur"] / a["RamAve"] > 1 - b["RamCur"] / b["RamAve"]) {
-        //     return -1;
-        //   }
-        //   return 0;
-        // }
         state.users = records;
         console.log(state.users);
-        // if (state.net === "שופרסל") {
-        //   state.allProducts = records.filter(isshuf);
-        //   state.allProducts = state.allProducts.sort(srtShuf);
-        // }
-        // else {
-        //   state.allProducts = records.filter(isRamy);
-        //   state.allProducts = state.allProducts.sort(srtRamy);
-        // }
       });
   }
 
-  // function addUser(user) {
-  //   fetch('http://localhost:3001/Users')
-  //     .then(response => {
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       const records = data.map((item) => {
-  //         return ({
-  //           userName: item.userName, password: item.password
-  //         })
-  //       });
-  //       state.users = records;
-  //       console.log(state.users);
-  //     });
-  // }
   return (
     <ProductContext.Provider value={{ state }}>
       <ProductDispath.Provider value={{ dispath }}>
@@ -451,5 +301,3 @@ export default function ContextProvider({ children }) {
     </ProductContext.Provider>
   );
 }
-
-// export {allProducts};

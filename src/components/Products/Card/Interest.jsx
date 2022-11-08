@@ -5,15 +5,9 @@ import { ProductContext, ProductDispath } from "../../Context/ContextProvider";
 
 export default function Interest(props) {
   const { state } = useContext(FilterContext);
-  // const { state } = useContext(ProductContext);
   const { dispath } = useContext(FilterDispath);
-  // const { dispath } = useContext(ProductDispath);
-  // const isAddFavorite = state.allItems.find(
-  //   (product) => product.id === props.id
   if (props.isInterest) {
-    // console.log(props.isInterest);
   }
-  // );
   return (
     <>
       {state.user != null && (

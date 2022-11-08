@@ -42,28 +42,12 @@ export default function Basket() {
             ))}
           </div>
           <div className="basket_priceBox">
-            {/* <OfferBadge /> */}
             <div className="basket_price">
               <span>מחיר הסל הכולל:</span>
               <span>|</span>
               <span>{state.totalPrice.toLocaleString()} ש"ח</span>
             </div>
-            {/* {state.totalPriceAfterOffer > 0 && (
-              <div className="basket_offer">
-                <span>قیمت با تخفیف</span>
-                <span>{state.totalPriceAfterOffer.toLocaleString()} تومان</span>
-              </div>
-            )}
-            <Offer />
-            <SendProducts />
-            <div className="basket_send">
-              <span>مجموع مبلغ قابل پرداخت</span>
-              <span>{state.totalPriceFainal.toLocaleString()} تومان</span>
-            </div> */}
-            {/* <Link className="favorite_backLink" to={"/"}>
-            <HiArrowRight />
-            חזור אחורה
-          </Link> */}
+          
             <Link className="basket_button_buy" to={"/"}>המשך בתהליך הרכישה</Link>
             <button
               onClick={() => dispath({ type: "EMPTY_BASKET" })}

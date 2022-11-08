@@ -7,35 +7,26 @@ import Buttons from "../../Buttons/Buttons";
 import { FilterContext, FilterDispath } from "../../Context/ContextFilter";
 
 export default function Card(props) {
-  // const { dispath } = useContext(ProductDispath);
   const { dispath } = useContext(FilterDispath);
-  // const { state } = useContext(ProductContext);
   const { state } = useContext(FilterContext);
-  // const { state1 } = useContext(FilterContext);
-  // console.log(props.isInterest);
   if (props.isInterest) {
-    // console.log(props.isInterest);
   }
 
   const datas = state.allItems.find((product) => product.id === props.id);
   const checkBasket = state.basket.some((product) => product.id === props.id);
-  // console.log(state.favorites);
 
   return (
     <div key={props.id} className="box">
       <Link to={`/${props.id}`}>
-        {/* <div className="discount"><span>מחיר משתלם</span></div> */}
         <img className="product_img" src={props.image} alt="product" />
         <div className="content">
           <div className="title">
             <span>{props.title}</span>
           </div>
           <div className="price">
-            {/* <span>{props.price.toLocaleString()} تومان</span> */}
             <span>
               מחיר ממוצע&nbsp;
               {
-                // Number(props.density).toFixed(2)
                 props.net === "שופרסל" ?
                   (props.ShufAve != null ? (Number(props.ShufAve).toFixed(1)) :
                     ("לא ידוע")) :

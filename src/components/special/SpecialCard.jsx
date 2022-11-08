@@ -25,13 +25,6 @@ export default function SpecialCard(props) {
                 </div>
               </div>
             </Link>
-            {/* {(props.user != null) && ( */}
-            {/* <button
-              onClick={() => dispath({ type: "REMOVE_FAVORITE", payload: props.id })}
-              className="favorite_button"
-            >
-              מחק מועדף
-            </button> */}
           </div>)}
     </>
 

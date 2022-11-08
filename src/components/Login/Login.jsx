@@ -1,14 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-// import "./Basket.css";
 import { Link } from "react-router-dom";
 import { HiArrowRight } from "react-icons/hi";
 import "./Login.css";
 import { ProductContext, ProductDispath } from "../Context/ContextProvider";
 import { FilterContext, FilterDispath } from "../Context/ContextFilter";
-// import BasketItem from "./BasketItem";
-// import Offer from "./Offer";
-// import OfferBadge from "./OfferBadge";
-// import SendProducts from "./SendProducts";
 
 export default function Login(props) {
   const { state } = useContext(FilterContext);
@@ -18,13 +13,11 @@ export default function Login(props) {
   const [user, setUser] = useState();
   const userExists = (item) => item.userName === username && item.password === password;
   const userNameExists = (item) => item.userName === username;
-  // const fn1 = props.fn;
   useEffect(() => {
     getUsers();
   }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const usr = { username: username, password: password };
     console.log(state.users.filter(userExists));
     if (state.users.filter(userNameExists).length != 0) {
       if (state.users.filter(userExists).length != 0) {
@@ -67,50 +60,6 @@ export default function Login(props) {
           </Link>
         </div>
       </div>
-      {/* {state.basket.length > 0 ? (
-        <div className="basket_container">
-          <div className="basket_itemBox">
-            {state.basket.map((product) => (
-              <BasketItem key={product.id} {...product} />
-            ))}
-          </div>
-          <div className="basket_priceBox">
-            <OfferBadge />
-            <div className="basket_price">
-              <span>جمع سبد خرید</span>
-              <span>|</span>
-              <span>{state.totalPrice.toLocaleString()} تومان</span>
-            </div>
-            {state.totalPriceAfterOffer > 0 && (
-              <div className="basket_offer">
-                <span>قیمت با تخفیف</span>
-                <span>{state.totalPriceAfterOffer.toLocaleString()} تومان</span>
-              </div>
-            )}
-            <Offer />
-            <SendProducts />
-            <div className="basket_send">
-              <span>مجموع مبلغ قابل پرداخت</span>
-              <span>{state.totalPriceFainal.toLocaleString()} تومان</span>
-            </div>
-            <button className="basket_button_buy">ادامه فرایند خرید</button>
-            <button
-              onClick={() => dispath({ type: "EMPTY_BASKET" })}
-              className="basket_button_remove"
-            >
-              حذف {state.basket.length} کالا از سبد خرید
-            </button>
-          </div>
-        </div>
-      ) : ( */}
-      {/* <div className="favorite_empty">
-        <img
-          className="favorite_empty_img"
-          src="images/empty-cart.png"
-          alt=""
-        />
-        <span className="favorite_empty_title">سبد خرید خالی است</span>
-      </div> */}
       <div className="login_Place">
         <form onSubmit={handleSubmit}>
           <label htmlFor="username">שם משתמש: </label>
@@ -132,7 +81,6 @@ export default function Login(props) {
           <button type="submit">התחבר</button>
         </form>
       </div>
-      {/* )} */}
     </>
   );
 }

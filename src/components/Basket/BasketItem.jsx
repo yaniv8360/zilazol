@@ -13,7 +13,6 @@ export default function BasketItem(props) {
           {props.net === "שופרסל" ? (<span>
             {(props.ShufCur * props.count).toLocaleString()} ש"ח</span>) :
             (<span>{(props.RamCur * props.count).toLocaleString()} ש"ח</span>)
-            // <span>{(props.price * props.count).toLocaleString()} ש"ח</span>
           }
         </div>
       </Link>

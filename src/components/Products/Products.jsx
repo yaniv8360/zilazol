@@ -25,23 +25,16 @@ const srtRamy = function (a, b) {
   return 0;
 }
 export default function Products(props) {
-  // const [prod, setProd] = useState("");
   const { state } = useContext(FilterContext);
   const prodExistsInFavorits = (prod) => state.favorites.find((item) => {
     return item === prod;
   }) != null;
-  // ).length > 0;
-  // const didMount = useRef(false);
-  // state.init = "b";
-  // getMerchant();
   useEffect(() => {
-    // if (didMount.current == false) {
     getMerchant();
     if (props.user != "") {
       getFavoritsFromDB(props.user);
       getSpecialsFromDB(props.user);
     }
-    // }
   }, [state]);
   function getMerchant() {
     fetch('http://localhost:3001/Products/1')
@@ -62,14 +55,10 @@ export default function Products(props) {
         });
         const isRamy = (item) => item.RamCur != null;
         const isshuf = (item) => item.ShufCur != null;
-        // console.log(records);
-        // setMerchants1(records);
-        // console.log(records);
         state.allItems = records;
         if (state.net === "שופרסל") {
           state.filteredItems = records.filter(isshuf);
           state.filteredItems = state.filteredItems.sort(srtShuf);
-          // console.log(state.filteredItems);
         }
         else {
           state.filteredItems = records.filter(isRamy);
@@ -80,7 +69,6 @@ export default function Products(props) {
   }
   console.log(props.user);
 
-  // props.fn("bob");
   console.log(state.filteredItems);
   const productsList = state.filteredItems.filter((product) => {
     return product.title.includes(state.searchKey) || !state.searchKey;
@@ -128,7 +116,6 @@ export default function Products(props) {
         {productsList.length > 0 ? (
           productsList.map((product) =>
             <Card net={state.net}
-              // isInterest={state.favorites.filter(item => item === '16000281684').length > 0}
               key={product.id} {...product}
               isInterest={state.favorites.filter(item => item === product.id).length > 0} />)
         ) : (

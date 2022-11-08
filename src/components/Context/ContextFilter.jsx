@@ -1,25 +1,5 @@
 import React, { createContext, useReducer, useState, useEffect } from "react";
 
-// import allProducts from "../Context/ContextProvider";
-
-// let allProducts = [{
-//   id: 1,
-//   title: "dani_the_king",
-//   image: 'images/1.jpg',
-//   price: 10000,
-//   count: 1,
-//   isInterest: false,
-//   category: 'میوه جات'
-// },
-// {
-//   id: 2,
-//   title: 'پیاز',
-//   image: 'images/2.jpg',
-//   price: 13000,
-//   count: 1,
-//   isInterest: false,
-//   category: 'سبزیجات'
-// }]
 let allProducts = [];
 let allAllProducts = [];
 
@@ -55,7 +35,6 @@ const srtRamy = function (a, b) {
   }
   return 0;
 }
-// (Number(100*(1-props.ShufCur/props.ShufAve)).toFixed(0).toString() + '%') :
 
 
 const filterItemsHandler = (key) => {
@@ -163,20 +142,8 @@ const filterReduce = (state, action) => {
 
     }, 0);
 
-    // if (isOffer) {
-    //   const offerPrice = (totalPrice * offerCode.disCount) / 100;
-    //   const totalPriceAfterOffer = totalPrice - offerPrice;
 
-    //   return {
-    //     totalPrice,
-    //     offerPrice,
-    //     totalPriceAfterOffer,
-    //     ...sumPriceWithSend(totalPrice, offerPrice)
-    //   };
-    // } else {
-    // return { totalPrice, ...sumPriceWithSend(totalPrice) };
     return totalPrice;
-    // }
   };
   switch (action.type) {
     case "SEARCH_KEYWORD":
@@ -185,7 +152,7 @@ const filterReduce = (state, action) => {
         ...state
       };
     case "CHANGE_NET": {
-      // if state.net == 
+
       if (state.net === "שופרסל") {
         state.net = "רמי לוי";
         state.filteredItems = state.allItems.filter(isRamy);
@@ -195,7 +162,7 @@ const filterReduce = (state, action) => {
         state.net = "שופרסל";
         state.filteredItems = state.allItems.filter(isshuf);
         state.filteredItems = state.filteredItems.sort(srtShuf);
-        // console.log(state.net)
+
       }
       state.basket = state.basket.forEach((product) => (product.count = 1));
       state.basket = [];
@@ -235,9 +202,7 @@ const filterReduce = (state, action) => {
     case "LOGIN_USER": {
       state.userName = action.payload;
       console.log(state.userName);
-      // getFavoritsFromDB(state.userName);
-      // getFavoritsFromDB(state.userName);
-      // console.log(state.favorites);
+
       return {
         ...state
       };
@@ -249,22 +214,20 @@ const filterReduce = (state, action) => {
       state.users = [{ userName: state.userName, password: action.payload.split(":")[1] }, ...state.users]
       console.log(state.users);
       state.favorites = [];
-      // getUsers();
+
       return {
         ...state
       };
     }
     case "GET_USER_SPECIALS": {
       getSpecialsFromDB(state.userName);
-      // console.log(state.userName);
-      // console.log(state.specials);
+
       return {
         ...state
       };
     }
     case "GET_USER_FAVORITES": {
-      // state.userName = action.payload;
-      // console.log(state.userName);
+
       getFavoritsFromDB(state.userName);
       console.log(state.userName);
       console.log(state.favorites);
@@ -276,21 +239,17 @@ const filterReduce = (state, action) => {
       if (state.user != null) {
         if (state.specials.filter(item => item.id == action.payload).length == 0) {
           addSpecial(action.payload, state.user);
-          //           return ({ "id": item.productID, "count": item.count })
+
           state.specials = [{ "id": action.payload, "count": 1 }, ...state.specials];
         } else {
-          // setState(myState.map(item => item.id === id ? {...item, item.description: "new desc"} : item))
-          // myState.map(item => item.id === id ? {...item, item.description: "new desc"} : item))
+
           const elm = state.specials.find(item => item.id = action.payload);
           console.log("came285CF");
-          // updateSpecial(action.payload, state.user, elm.count + 1);
           updateSpecial(action.payload, state.user, 5);
 
-          // state.specials = state.specials.map(item => item.id === action.payload ? {
-            // ...item, "count": item.count + 1
-          // } : item);
+
           console.log(state.specials);
-          // [{ "id": action.payload, "count": 1 }, ...state.specials];
+
 
 
 
@@ -344,7 +303,7 @@ const filterReduce = (state, action) => {
 
       return {
         ...state
-        // ...sumPrice(state.basket, state.isEnterOfferCode)
+
       };
     }
     case "INCREASE": {
@@ -356,7 +315,7 @@ const filterReduce = (state, action) => {
 
       return {
         ...state
-        // ...sumPrice(state.basket, state.isEnterOfferCode)
+
       };
     }
     case "DECREASE": {
@@ -370,7 +329,7 @@ const filterReduce = (state, action) => {
 
       return {
         ...state
-        // ...sumPrice(state.basket, state.isEnterOfferCode)
+
       };
     }
     case "EMPTY_BASKET": {
@@ -380,7 +339,7 @@ const filterReduce = (state, action) => {
 
       return {
         ...state
-        // ...sumPrice(state.basket, state.isEnterOfferCode)
+
       };
     }
     case "REMOVE_FROM_BASKET": {
@@ -395,7 +354,7 @@ const filterReduce = (state, action) => {
 
       return {
         ...state
-        // ...sumPrice(state.basket, state.isEnterOfferCode)
+
       };
     }
     default:
@@ -407,8 +366,7 @@ export const FilterContext = createContext();
 export const FilterDispath = createContext();
 
 export default function ContextFilter({ children }) {
-  // console.log("came76");
-  // const [merchants1, setMerchants1] = useState(false);
+
   const [state, dispath] = useReducer(filterReduce, initialFilterState);
 
   useEffect(() => {
@@ -422,54 +380,37 @@ export default function ContextFilter({ children }) {
       })
       .then(data => {
 
-        // const records = data.map((item) => ({ id: item.ItemCode, title: item.ItemName, image: 'https://m.pricez.co.il/ProductPictures/200x/'+item.ItemCode+'.jpg', price: item.ItemCode, count: 1, isInterest: false, category: 'سبزیجات' }));
-        // console.log(records);
         const records = data.map((item) => {
           let imag = 'https://m.pricez.co.il/ProductPictures/200x/' + item.ItemCode + '.jpg';
           if (item.Image != null) {
             imag = item.Image;
           }
           return ({
-            // id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode,
-            // count: 1, isInterest: false, category: 'سبزیجات', RamAve: item.RamAve,
-            // RamCur: item.RamCur, ShufAve: item.ShufAve, ShufCur: item.ShufCur
+
             id: item.ItemCode, title: item.ItemName, image: imag, price: item.ItemCode,
             count: 1, category: 'سبزیجات', RamAve: item.RamAve,
             RamCur: item.RamCur, ShufAve: item.ShufAve, ShufCur: item.ShufCur
           })
         });
-        // console.log(data[0].ItemName);
+
         const isRamy = (item) => item.RamCur != null;
         const isshuf = (item) => item.ShufCur != null;
         console.log(records);
-        // setMerchants1(records);
-        console.log(records);
-        // initialFilterState.filteredItems = records;
-        // console.log(data[0].ItemName);
-        // setMerchants(data[0].ItemName);
-        // console.log(merchants);
-        state.allItems = records;
-        // if (state.net === "שופרסל") {
-        //   state.filteredItems = records.filter(isshuf);
-        //   state.filteredItems = state.filteredItems.sort(srtShuf);
-        //   console.log(state.filteredItems);
 
-        // }
-        // else {
-        //   state.filteredItems = records.filter(isRamy);
-        //   state.filteredItems = state.filteredItems.sort(srtRamy);
+        console.log(records);
+
+        state.allItems = records;
+
         // }
         setTimeout(() => {
           dispath({ type: "ALL" });
         }, 1000);
 
 
-        // state.filteredItems = records.filter(isshuf);
-        // console.log(state.allProducts);
-        // console.log(state.filteredItems[0].title);
+
 
       });
-    // console.log(merchants);
+
 
   }
   function getUsers() {
@@ -491,18 +432,8 @@ export default function ContextFilter({ children }) {
     }, 100);
   }
 
-  // console.log(initialFilterState)
-  // console.log(merchants);
   console.log(state);
-  // state.totalPrice = 8;
 
-  // console.log(state.totalPrice);
-  // filteredItems: [...allProducts]
-  // state.filteredItems[0].title = 'abc';
-  // console.log(state.filteredItems[0].title);
-  // state.filteredItems.allProducts[0].title = merchants;
-  // console.log(state.allProducts[0].title);
-  // console.log(state.allProducts);
   return (
     <FilterContext.Provider value={{ state }}>
       <FilterDispath.Provider value={{ dispath }}>
